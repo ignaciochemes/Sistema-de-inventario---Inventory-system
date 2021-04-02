@@ -1,0 +1,39 @@
+<div class="container p-4">
+    <div class="row">
+        {{!{{#each links}}
+        <div class="col-md-3 mx-auto">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title text-uppercase">
+                        {{detalles.producto}}
+                    </h3>
+                    <p class="m-2">
+                        En Stock: AUN NO
+                    </p>
+                    <p class="m-2">
+                        Descripcion: <br>{{detalles.descripcion}}
+                    </p>
+                    <p class="m-2">
+                        Cliente: {{detalles.cliente}}
+                    </p>
+                    <p class="m-2">
+                        Cantidad Vendidos: {{detalles.cantidadVendidos}}
+                    </p>
+                    <p class="m-2">
+                        Ganancia Bruta: {{detalles.gananciaBruta}}
+                    </p>
+                    <p class="m-2">
+                        Ganancia Neta: $ {{detalles.gananciaNeta}}
+                    </p>
+                    <p class="m-2">
+                        Monto Venta: $ {{detalles.montoVenta}}
+                    </p>
+                    <p>Publicado hace: <br>{{timeago detalles.created_at}}</p>
+                    <a href="/ventas/delete/{{detalles.id}}" class="btn btn-danger m-2">Eliminar venta</a>
+                    <a href="/ventas/edit/{{detalles.id}}" class="btn btn-secondary">Editar venta</a>
+                </div>
+                <a href="/ventas" class="btn btn-success m-2">Volver a ventas</a>
+            </div>
+        </div>
+    </div>
+</div>

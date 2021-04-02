@@ -1,0 +1,59 @@
+<form action="/mistock/vender/{{id}}" method="POST">
+    <div class="form-group">
+        Producto:
+        <input type="text" value="{{producto}}" class="form-control" name="producto" autofocus>
+    </div>
+    <div class="form-group">
+        Descripcion:
+        <textarea name="descripcion" id="" rows="2" class="form-control" placeholder="Descripcion">{{articulo.descripcion}}</textarea>
+    </div>
+    <div class="form-group">
+        Cliente:
+        <input type="text" class="form-control" name="cliente" placeholder="Cliente">
+    </div>
+    <div class="form-group">
+        Cantidad a vender:
+        <input type="number" id="cantidad" value="totalbread1" name="cantidadVendidos" class="form-control">
+    </div>
+    <div class="form-group">
+        Precio Venta:
+        <input type="number" id="precioVenta" value="{{articulo.precioVenta}}" name="gananciaBruta" class="form-control">
+        Ganancia Bruta: $ <span id="ganancia_bruta"></span>
+    </div>
+    <div class="form-group">
+        Precio Compra:
+        <input type="number" id="precioCompra" name="gananciaNeta" class="form-control">
+        Ganancia Neta: $ <span id="ganancia_neta"></span>
+    </div>
+    <div class="form-group">
+        Monto total de la venta:
+        <input type="text" name="montoVenta" class="form-control">
+        <input id="button1" type="button" class="btn btn-info btn-sm" value="Actualizar Monto total de la venta" />
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success">
+            Guardar
+        </button>
+        <a href="/mistock" class="btn btn-dark btn-sm">Cancelar</a>
+    </div>
+</form>
+<script>
+$('input').keyup(function(){
+
+    var cantidad = parseFloat($('#cantidad').val());
+    var precioVenta = parseFloat($('#precioVenta').val());
+    var precioCompra = parseFloat($('#precioCompra').val());
+    var montoTotal = parseFloat($('#montoTotal').val());
+
+    $('#ganancia_bruta').html(cantidad * precioVenta);
+    $('#ganancia_neta').html((cantidad * precioVenta) - (cantidad * precioCompra));
+
+});
+$(document).ready(function(){ 
+  $('#button1').click(function(){
+      var cantidad = parseFloat($('#cantidad').val());
+      var precioVenta = parseFloat($('#precioVenta').val());
+  $('input[name="montoVenta"]').val(cantidad * precioVenta);
+   });
+});
+</script>

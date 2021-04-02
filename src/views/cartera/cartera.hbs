@@ -1,0 +1,109 @@
+<div class="grid-container">
+  <div class="welcome">
+    <div class="jumbotron">
+        <h1>Cartera</h1>
+    </div>
+</div>
+<div class="graficoUno">
+    <div class="card text-white bg-dark mb-3">
+        <div class="card-header">Ganancias</div>
+            <div class="card-body">
+                <h5 class="card-title">Ganancias Brutas: $ {{carteraDos.gananciaBrutaTotal}}</h5>
+                <h5 class="card-title">Ganancias Netas: $ {{carteraDos.gananciaNetaTotal}}</h5>
+                <h5 class="card-title">Dinero Efectivo: $ {{cartera.dineroEfectivo}}</h5>
+                <h5 class="card-title">Dinero Banco: $ {{cartera.dineroBanco}}</h5>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#efectivoModal">
+                    Agregar Efectivo
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="efectivoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content text-dark">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Cuanto dinero en efectivo quieres agregar?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/cartera/addefectivo" method="POST">
+                                    <div class="form-group">
+                                        <input type="number" name="dineroEfectivo" class="form-control" placeholder="Dinero en efectivo" autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success">
+                                            Guardar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-light" data-toggle="modal" data-target="#bancoModal">
+                    Agregar al banco
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="bancoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content text-dark">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Cuanto dinero quieres agregar al banco?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="/cartera/addbanco" method="POST">
+                                    <div class="form-group">
+                                        <input type="number" name="dineroBanco" class="form-control" placeholder="Dinero al banco">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success">
+                                            Guardar
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+    <div class="card text-white bg-danger mb-3">
+        <div class="card-header">Gastos</div>
+            <div class="card-body">
+                <h5 class="card-title">Gastos Productos: $ 1410.50</h5>
+                <h5 class="card-title">Gastos Envios: $ 2010.50</h5>
+                <h5 class="card-title">Gastos Varios: $ 510.50</h5>
+            </div>
+    </div>
+  </div>
+  <div class="graficoDos">
+      <div class="card text-white bg-dark mb-3">
+        <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Dark card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+    </div>
+  </div>
+  <div class="informacionUno">
+
+  </div>
+  <div class="informacionDos">
+      
+  </div>
+  <div class="informacionTres">
+      <div class="card text-white bg-dark mb-3">
+        <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Dark card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+    </div>
+  </div>
+</div>

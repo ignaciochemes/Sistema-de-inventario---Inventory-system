@@ -1,0 +1,44 @@
+<form action="/mistock/edit/{{articulo.id}}" method="POST">
+    <div class="form-group">
+        Producto:
+        <input type="text" value="{{producto}}" class="form-control" name="producto" autofocus>
+    </div>
+    <div class="form-group">
+        Descripcion:
+        <textarea name="descripcion" id="" rows="2" class="form-control" placeholder="Descripcion">{{descripcion}}</textarea>
+    </div>
+    <div class="form-row">
+        <div class="col-auto my-1">
+            <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Categorias</label>
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="categoria">
+                <option selected>{{categoria}}</option>
+                <option value="Tabacos">Tabacos</option>
+                <option value="Parafernalia">Parafernalia</option>
+                <option value="Papeles">Papeles</option>
+                <option value="Bongs">Bongs</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        Precio Compra:
+        <input type="number" value="{{precioCompra}}" name="precioCompra" class="form-control">
+    </div>
+    <div class="form-group">
+        Precio Venta:
+        <input type="number" value="{{precioVenta}}" name="precioVenta" class="form-control">
+    </div>
+    <div class="form-group">
+        Cantidad/Stock:
+        <input type="number" value="{{cantidad}}" name="cantidad" class="form-control">
+    </div>
+    <div class="form-group">
+        Cantidad Vendidos:
+        <input type="number" value="{{cantidadVendidos}}" name="cantidadVendidos" class="form-control">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success">
+            Guardar
+        </button>
+        <a href="/mistock" class="btn btn-dark btn-sm">Cancelar</a>
+    </div>
+</form>

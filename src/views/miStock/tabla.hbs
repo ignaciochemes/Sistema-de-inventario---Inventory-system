@@ -1,0 +1,88 @@
+<body>
+    <div class="container p-4 text-center">
+        {{>buscarEnTabla}}
+    </div>
+      <div class="container">
+        <h1 class="text-center">Tabla de stock</h1>
+            <button type="button" class="btn btn-success text-dark m-2 mx-auto" data-toggle="modal" data-target="#agregarStock">
+              Agregar nuevo stock
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="agregarStock" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Con este formulario, usted podra crear ingresar nuevo stock.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    {{>agregarStock}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="table-responsive" id="cont-tabla">
+            <table class="order-table table mx-auto" id="tablaArticulos">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Producto</th>
+                        <th>Descripcion</th>
+                        <th>Categoria</th>
+                        <th>P. Compra</th>
+                        <th>P. Venta</th>
+                        <th>Stock</th>
+                        <th>Cant. Vendidos</th>
+                        <th>Ganancia Bruta</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody id="mitabla">
+                    {{#each articulos}}
+                        <tr>
+                            <td>{{id}}</td>
+                            <td>{{producto}}</td>
+                            <td>{{descripcion}}</td>
+                            <td>{{categoria}}</td>
+                            <td>$ {{precioCompra}}</td>
+                            <td>$ {{precioVenta}}</td>
+                            <td>{{cantidad}}</td>
+                            <td>{{cantidadVendidos}}</td>
+                            <td>$ {{gananciaBruta}}</td>
+                            <td>
+                              <!--<a href="mistock/delete/{{id}}" class="btn btn-danger">Borrar articulo</a>></a> -->
+                              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eliminar">
+                                Eliminar
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar el articulo?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      El articulo se borrara de la base de datos y no podra recuperarse. Pero puede volver a crearlo.
+                                    </div>
+                                    <div class="modal-footer">
+                                      <a href="mistock/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                                <a href="/mistock/edit/{{id}}" class="btn btn-light btn-sm" id="botonEditar">Editar</a>
+                                <a href="/mistock/vender/{{id}}" class="btn btn-success btn-sm" id="botonVender">Vender</a>
+                                <a href="/mistock/masuno/{{id}}" class="btn btn-warning btn-sm" id="botonMasUno">Vender Rapido</a>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+      </div>
+</body>

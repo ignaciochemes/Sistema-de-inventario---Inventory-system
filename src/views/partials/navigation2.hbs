@@ -1,0 +1,138 @@
+<div class="area"></div>
+  <nav class="main-menu">
+            <ul>
+                {{#if user}}
+                <li>
+                    <a href="/profile">
+                        <i class="fa fa-home fa-2x"></i>
+                        <span class="nav-text">
+                            Mi perfil
+                        </span>
+                    </a>
+                  
+                </li>
+                <li class="has-subnav">
+                    <a href="/mistock/">
+                        <i class="fa fa-archive fa-2x"></i>
+                        <span class="nav-text">
+                            Mi stock
+                        </span>
+                    </a>
+                    
+                </li>
+                <li class="has-subnav">
+                    <a href="/ventas/">
+                       <i class="fa fa-plus fa-2x"></i>
+                        <span class="nav-text">
+                            Ventas
+                        </span>
+                    </a>
+    
+                </li>
+                <li class="has-subnav">
+                    <a href="/compras/">
+                       <i class="fa fa-plus fa-2x"></i>
+                        <span class="nav-text">
+                            Compras
+                        </span>
+                    </a>
+    
+                </li>
+                <li class="has-subnav">
+                    <a href="/proveedores">
+                       <i class="fa fa-list fa-2x"></i>
+                        <span class="nav-text">
+                            Proveedores
+                        </span>
+                    </a>
+                    
+                </li>
+                <li class="has-subnav">
+                    <a href="/cartera">
+                       <i class="fa fa-suitcase fa-2x"></i>
+                        <span class="nav-text">
+                            Cartera
+                        </span>
+                    </a>
+                   
+                </li>
+                <li>
+                    <a href="/categorias">
+                        <i class="fa fa-bookmark fa-2x"></i>
+                        <span class="nav-text">
+                            Categorias
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-font fa-2x"></i>
+                        <span class="nav-text">
+                           Quotes
+                        </span>
+                    </a>
+                </li>
+                <li>
+                   <a href="#">
+                       <i class="fa fa-table fa-2x"></i>
+                        <span class="nav-text">
+                            Tables
+                        </span>
+                    </a>
+                </li>
+                <li>
+                   <a href="#">
+                        <i class="fa fa-map-marker fa-2x"></i>
+                        <span class="nav-text">
+                            Maps
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                       <i class="fa fa-info fa-2x"></i>
+                        <span class="nav-text">
+                            Documentation
+                        </span>
+                    </a>
+                </li>
+                {{else}}
+                <li>
+                    <a href="/">
+                        <i class="fa fa-home fa-2x"></i>
+                        <span class="nav-text">
+                            Inicio
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/signin">
+                        <i class="fa fa-bar-chart-o fa-2x"></i>
+                        <span class="nav-text">
+                            Iniciar sesion
+                        </span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/signup">
+                        <i class="fa fa-font fa-2x"></i>
+                        <span class="nav-text">
+                           Registrarse
+                        </span>
+                    </a>
+                </li>
+                {{/if}}
+            </ul>
+            {{#if user}}
+            <ul class="logout">
+                <li>
+                   <a href="/logout">
+                         <i class="fa fa-power-off fa-2x"></i>
+                        <span class="nav-text">
+                            Cerrar sesion
+                        </span>
+                    </a>
+                </li>  
+            </ul>
+            {{/if}}
+        </nav>

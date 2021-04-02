@@ -1,0 +1,104 @@
+<h1>Calculadora</h1>
+<div class="container mx-auto p-4">
+    <div class="mainContainer">			
+        <div class="messageError"></div>
+                
+        <form>					
+            <input type="text" class="1st" name="1st">		
+            <span class="operator">+</span>
+            <input type="text" class="2nd" name="2nd">	
+            <span> = </span>
+            <span class="answer"></span>
+        </form>	
+            </br>						
+        <div>
+            <span class="add">+</span>
+            <span class="minus">-</span>
+            <span class="times">x</span>
+            <span class="divide">/</span>					
+        </div>				
+    </div>
+</div>
+<script>
+$( document ).ready(function() {
+	$( ".1st" ).keyup(function() {
+		var1s = $( ".1st" ).val();						
+		if(var1s.match(/^\d+$/)){
+			$('.messageError').html('');
+			sums();						
+		}else{
+			$('.messageError').html('sorry number only for the first value');						
+		}					
+	});
+	
+	$( ".2nd" ).keyup(function() {
+		var2s = $( ".2nd" ).val();						
+		if(var2s.match(/^\d+$/)){
+			$('.messageError').html('');
+			sums();						
+		}else{
+			$('.messageError').html('sorry number only for the second value');						
+		}					
+	});					
+	
+	  
+	$( ".add" ).click(function() {					
+		$('.operator').html('+');	
+		sums();						
+	});
+	$( ".minus" ).click(function() {
+		$('.operator').html('-');	
+		sums();					
+	});
+	$( ".times" ).click(function() {
+		$('.operator').html('x');
+		sums();					
+	});
+	$( ".divide" ).click(function() {
+		$('.operator').html('/');
+		sums();					
+	});				
+	
+	function sums(){		
+		console.log('testtest');
+		var1 =  parseInt($( ".1st" ).val());	
+		var2 =  parseInt($( ".2nd" ).val());	
+		operator = $( ".operator" ).html();			
+		 sum = (var1 + var2);
+		switch (operator) { 
+			case '+': 
+				sum = (var1 + var2);
+				break;
+			case '-': 
+				sum = (var1 - var2);
+				break;
+			case 'x': 
+				sum = (var1 * var2);
+				break;		
+			case '/': 
+				sum = (var1 / var2);
+				break;
+			default:
+				sum = (var1 + var2);
+		}					
+		 $( ".answer" ).html(sum);
+		 
+		  $(".answer").each(function(c, obj){
+			  $(obj).text(addCommas(parseFloat($(obj).text()).toFixed(2)));
+		   });				
+	}
+	
+	function addCommas(nStr)
+	{
+	   nStr += '';
+	   x = nStr.split('.');
+	   x1 = x[0];
+	   x2 = x.length > 1 ? '.' + x[1] : '';
+	   var rgx = /(\d+)(\d{3})/;
+	   while (rgx.test(x1)) {
+		  x1 = x1.replace(rgx, '$1' + ',' + '$2');
+	   }
+	   return x1 + x2;
+	}						
+});  
+</script>

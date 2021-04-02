@@ -1,0 +1,49 @@
+<div class="container p-4">
+    <div class="container mx-auto text-center">
+        <h4>Agregar proveedor a la base de datos</h4>
+        <p></p>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/proveedores/add" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="nombre" placeholder="Nombre" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="apellido" placeholder="Apellido" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="empresa" placeholder="Empresa" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="email" placeholder="Email" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" name="telefono" placeholder="Telefono" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" class="form-control" name="telefono2" placeholder="Telefono 2" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="" rows="2" class="form-control" name="descripcion" placeholder="Descripcion"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="deuda" class="form-control" placeholder="Deuda al proveedor">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="activo" class="form-control" placeholder="Deuda del proveedor">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success">
+                                Agregar proveedor
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/proveedores/edit/{{proveedor.id}}" method="POST">
+                        <div class="form-group">
+                            <input type="text" value="{{proveedores.nombre}}" class="form-control" name="nombre" placeholder="Nombre" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{proveedores.apellido}}" class="form-control" name="apellido" placeholder="Apellido">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{proveedores.empresa}}" class="form-control" name="empresa" placeholder="Empresa">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" value="{{proveedores.telefono}}" class="form-control" name="telefono" placeholder="Telefono">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" value="{{proveedores.telefono2}}" class="form-control" name="telefono2" placeholder="Telefono 2">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" value="{{proveedores.email}}" class="form-control" name="email" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <textarea name="descripcion" id="" rows="2" class="form-control" placeholder="Descripcion">{{proveedores.descripcion}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" value="{{proveedores.deuda}}" class="form-control" name="deuda" placeholder="Deuda al proveedor">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" value="{{proveedores.activo}}" class="form-control" name="activo" placeholder="Deudas del proveedor">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" value="{{proveedores.comprasTotales}}" class="form-control" name="comprasTotales" placeholder="Compras totales">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" value="{{proveedores.pesosTotales}}" class="form-control" name="pesosTotales" placeholder="Pesos totales">
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

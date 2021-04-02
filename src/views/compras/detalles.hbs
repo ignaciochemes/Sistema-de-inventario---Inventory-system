@@ -1,0 +1,42 @@
+<div class="container p-4">
+    <div class="row">
+        {{!{{#each links}}
+        <div class="col-md-3 mx-auto">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title text-uppercase">
+                        {{detalles.producto}}
+                    </h3>
+                    <p class="m-2">
+                        En Stock: AUN NO
+                    </p>
+                    <p class="m-2">
+                        Descripcion: <br>{{detalles.descripcion}}
+                    </p>
+                    <p class="m-2">
+                        Precio Compra: $ {{detalles.precioCompra}}
+                    </p>
+                    <p class="m-2">
+                        Precio Venta: $ {{detalles.precioVenta}}
+                    </p>
+                    <p class="m-2">
+                        Cantidad Comprados: {{detalles.cantidadComprados}}
+                    </p>
+                    <p class="m-2">
+                        Gastos Envio: $ {{detalles.gastosEnvio}}
+                    </p>
+                    <p class="m-2">
+                        Gastos Varios: $ {{detalles.gastosVarios}}
+                    </p>
+                    <p class="m-2">
+                        Proveedor: {{detalles.proveedor}}
+                    </p>
+                    <p>Publicado hace: <br>{{timeago detalles.created_at}}</p>
+                    <a href="/compras/delete/{{detalles.id}}" class="btn btn-danger m-2">Eliminar compra</a>
+                    <a href="/compras/edit/{{detalles.id}}" class="btn btn-secondary">Editar</a>
+                </div>
+                <a href="/compras" class="btn btn-success m-2">Volver a compras</a>
+            </div>
+        </div>
+    </div>
+</div>

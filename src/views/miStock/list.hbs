@@ -1,0 +1,28 @@
+<div class="container p-4">
+    <div class="row">
+        {{#each articulos}}
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3 class="card-title text-uppercase">
+                        {{producto}}
+                    </h3>
+                    <p class="m-2">
+                        {{descripcion}}
+                    </p>
+                    <p>{{timeago created_at}}</p>
+                    <a href="/mistock/delete/{{id}}" class="btn btn-danger">Borrar articulo</a>
+                    <a href="/mistock/edit/{{id}}" class="btn btn-secondary">Editar articulo</a>
+                </div>
+            </div>
+        </div>
+        {{else}}
+            <div class="col-md-4 mx-auto">
+                <div class="card card-body text-center">
+                    <p>No hay articulos en el sistema</p>
+                    <a href="/mistock/add">Crea uno!</a>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</div>

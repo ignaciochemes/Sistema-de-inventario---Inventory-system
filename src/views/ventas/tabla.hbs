@@ -1,0 +1,87 @@
+<body>
+    {{#if ventas}}
+    <div class="container p-4 text-center">
+        {{>buscarEnTabla}}
+    </div>
+      <div class="container mx-auto">
+          <div id="cont-tabla">
+            <h1 class="text-center">Tabla venta masiva de productos</h1>
+            <button type="button" class="btn btn-success text-dark m-2 mx-auto" data-toggle="modal" data-target="#agregarVenta">
+              Agregar nueva venta masiva
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="agregarVenta" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Con este formulario, usted podra realizar ventas masivas.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    {{>formularioVenta}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <table class="order-table table mx-auto" id="tablaArticulos">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Producto</th>
+                        <th>Cant. Comprados</th>
+                        <th>Precio Compra</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody id="mitabla">
+                    {{#each ventas}}
+                        <tr>
+                            <td>{{id}}</td>
+                            <td>{{producto}}</td>
+                            <td>{{cliente}}</td>
+                            <td>{{cantidadVendidos}}</td>
+                            <td>
+                              <!--<a href="mistock/delete/{{id}}" class="btn btn-danger">Borrar articulo</a>></a> -->
+                              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalLong">
+                                Eliminar
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar la venta?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      La venta se borrara de la base de datos y no podra recuperarse. Pero puede volver a cargarla.
+                                    </div>
+                                    <div class="modal-footer">
+                                      <a href="/ventas/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                                <a href="/ventas/edit/{{id}}" class="btn btn-light btn-sm" id="botonEditar">Editar</a>
+                                <a href="/ventas/detalles/{{id}}" class="btn btn-light btn-sm" id="botonEditar">Detalles</a>
+                            </td>
+                        </tr>
+                </tbody>
+                {{/each}}
+            </table>
+            </div>
+            {{else}}
+                <div class="col-md-4 mx-auto p-5">
+                    <h1 class="text-center">Ventas masivas</h1>
+                    <div class="card card-body text-center">
+                        <p>No tiene agregada ninguna venta masiva</p>
+                        <a class="btn btn-success" href="/ventas/add">Agregar nueva venta</a>
+                    </div>
+            </div>
+            {{/if}}
+      </div>
+</body>
