@@ -14,7 +14,7 @@ router.get('/', isLoggedIn, async (req, res) => {
 
 router.post('/add', isLoggedIn, async (req, res) => { 
     let tito = "";
-    const { producto, descripcion, categoria, precioVenta, precioCosto, proveedor } = req.body;
+    const { producto, descripcion, categoria, cantidadIngresados, precioVenta, precioCosto, proveedor } = req.body;
     const seleccionDeProductosXUsuario = await pool.query('SELECT producto FROM articulos WHERE user_id = ?', [req.user.id]);
     seleccionDeProductosXUsuario.forEach((anibales) => {
         if (anibales.producto === producto) {
@@ -25,8 +25,9 @@ router.post('/add', isLoggedIn, async (req, res) => {
     if (tito.length) {
         const updateProducto = {
             producto,
-            categoria,
             descripcion,
+            categoria,
+            cantidadIngresados,
             precioVenta,
             precioCosto,
             proveedor,
@@ -38,8 +39,9 @@ router.post('/add', isLoggedIn, async (req, res) => {
     } else {
         const nuevoProducto = {
             producto,
-            categoria,
             descripcion,
+            categoria,
+            cantidadIngresados,
             precioVenta,
             precioCosto,
             proveedor,
@@ -59,9 +61,27 @@ router.get('/addtostock/:id', isLoggedIn, async (req, res) => {
 
 router.post('/addtostock/:id', isLoggedIn, async (req, res) => {
     const { id, producto, descripcion, categoria, precioCompra, precioVenta, cantidad } = req.body;
-    const seleccionDeProductosXUsuario = await pool.query('SELECT id FROM articulos WHERE user_id = ? AND id = ?', [req.user.id, id]);
-    if (seleccionDeProductosXUsuario[0].id === parseInt(id, 10)) {
-        const updateProducto = {
+    const seleccionDeProductosXUsuario = await pool.query('SELECT id FROM stock WHERE user_id = ? AND id = ?', [req.user.id, id]);
+    //if (seleccionDeProductosXUsuario[0].id === parseInt(id, 10)) {
+    //let parse = parseInt(seleccionDeProductosXUsuario[0].id, 10);
+    console.log(seleccionDeProductosXUsuario);  
+    if (!seleccionDeProductosXUsuario.length) {
+          const nuevoProducto = {
+              id,
+              producto,
+              categoria,
+              precioCompra,
+              precioVenta,
+              descripcion,
+              cantidad,
+              user_id: req.user.id
+          };
+          await pool.query('INSERT INTO stock SET ?', [nuevoProducto]);
+          await pool.query('UPDATE articulos SET cantidadIngresados = cantidadIngresados - ? WHERE id = ? AND user_id = ?', [cantidad, id, req.user.id])
+          req.flash('success', 'Producto guardado correctamente!');
+          res.redirect('/articulos');
+    } else {
+            const updateProducto = {
             producto,
             categoria,
             precioCompra,
@@ -71,20 +91,7 @@ router.post('/addtostock/:id', isLoggedIn, async (req, res) => {
         };
         await pool.query('UPDATE stock SET ? WHERE id = ? AND user_id = ?', [updateProducto, id, req.user.id]);
         await pool.query('UPDATE stock SET cantidad = cantidad + ? WHERE id = ? AND user_id = ?', [cantidad, id, req.user.id]);
-        req.flash('success', 'Producto guardado correctamente!');
-        res.redirect('/articulos');
-    } else {
-        const nuevoProducto = {
-            id,
-            producto,
-            categoria,
-            precioCompra,
-            precioVenta,
-            descripcion,
-            cantidad,
-            user_id: req.user.id
-        };
-        await pool.query('INSERT INTO stock SET ?', [nuevoProducto]);
+        await pool.query('UPDATE articulos SET cantidadIngresados = cantidadIngresados - ? WHERE id = ? AND user_id = ?', [cantidad, id, req.user.id]);
         req.flash('success', 'Producto guardado correctamente!');
         res.redirect('/articulos');
     }
