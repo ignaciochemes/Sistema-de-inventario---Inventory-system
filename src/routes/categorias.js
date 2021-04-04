@@ -47,7 +47,7 @@ router.post('/edit/:id', isLoggedIn, async (req, res) => {
         descripcion,
         user_id: req.user.id
     };
-    await pool.query('UPDATE categorias set ? WHERE id = ?', [nuevoProducto, id]);
+    await pool.query('UPDATE categorias SET ? WHERE id = ?', [nuevoProducto, id]);
     req.flash('success', 'Categoria editada satisfactoriamente');
     res.redirect('/categorias');
 });

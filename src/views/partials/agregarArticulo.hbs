@@ -1,0 +1,55 @@
+<form action="/articulos/add" method="POST">
+    <div class="form-group">
+        <input type="text" class="form-control" name="producto" placeholder="Producto" autofocus>
+    </div>
+    <div class="form-group">
+        <textarea name="descripcion" id="" rows="2" class="form-control" placeholder="Descripcion"></textarea>
+    </div>
+    {{#if categorias}}
+    <div class="form-row">
+        <div class="col-auto my-1">
+            <p>Categorias: </p>
+            <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Categorias</label>
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="categoria">
+                <option selected>Categorias</option>
+                {{#each categorias}}
+                <option>{{this.titulo}}</option> 
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    {{else}}
+    <div class="form-group">
+        <input type="text" name="categoria" class="form-control" placeholder="Categoria">
+    </div>
+    {{/if}}
+    <div class="form-group">
+        <input type="text" class="form-control" name="precioCosto" placeholder="Precio Costo" autofocus>
+    </div>
+    <div class="form-group">
+        <input type="text" class="form-control" name="precioVenta" placeholder="Precio Venta" autofocus>
+    </div>
+    {{#if proveedor}}
+    <div class="form-row">
+        <div class="col-auto my-1">
+            <p>Proveedor:</p>
+            <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Proveedor</label>
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="proveedor">
+                {{#each proveedor}}
+                <option>{{empresa}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    {{else}}
+    <div class="form-group">
+        <p>No tiene proveedor, puede agregarlos <a href="/proveedores">AQUI</a></p>
+        <input type="text" class="form-control" name="proveedor" placeholder="Proveedor" autofocus>
+    </div>
+    {{/if}}
+    <div class="form-group">
+        <button class="btn btn-success">
+            Agregar articulo
+        </button>
+    </div>
+</form>

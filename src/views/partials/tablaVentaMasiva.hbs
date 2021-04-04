@@ -1,0 +1,21 @@
+<table id="tablaVentaMasiva" class="display" style="width:90%">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>Producto</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each productos}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{producto}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+<script>
+$(document).ready(function() {
+    $('#tablaVentaMasiva').DataTable();
+} );
+</script>

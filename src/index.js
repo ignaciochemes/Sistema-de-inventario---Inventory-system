@@ -57,6 +57,7 @@ app.use('/compras', require('./routes/compras'));
 app.use('/ventas', require('./routes/ventas'));
 app.use('/categorias', require('./routes/categorias'));
 app.use('/testeos', require('./routes/testeos'));
+app.use('/articulos', require('./routes/articulos'));
 
 
 //Archivos publicos

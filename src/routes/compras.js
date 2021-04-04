@@ -11,6 +11,11 @@ router.get('/', isLoggedIn, async (req, res) => {
     res.render('compras/tabla', {compras: compra, proveedores: proveedor});
 });
 
+router.get('/add', isLoggedIn, async (req, res) => {
+    const proveedores = await pool.query('SELECT * FROM proveedores WHERE user_id = ?', [req.user.id]);
+    res.render('compras/add', {proveedores: proveedores});
+});
+
 router.post('/add', isLoggedIn, async (req, res) => {
     const { producto, descripcion, precioCompra, precioVenta, cantidadComprados, gastosEnvio, gastosVarios, proveedor } = req.body;
     const nuevoProducto = {

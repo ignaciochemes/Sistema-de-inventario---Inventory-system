@@ -2,15 +2,33 @@
 
 <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/bootstrap-table.min.js"></script>
 <script src="https://unpkg.com/bootstrap-table@1.18.3/dist/extensions/print/bootstrap-table-print.min.js"></script>
-
 <body>
       <div class="container">
-      <h1 class="text-center p-4">Tabla de stock</h1>
+      <h1 class="text-center p-4">Tabla de articulos</h1>
         <div class="container text-center">
-            <a href="/mistock/add" class="btn btn-success btn-lg text-dark m-2" id="botonEditar">Agregar nuevo stock sin tener que registrar nueva compra <i class="fas fa-plus"></i></i></a>
+            <button type="button" class="btn btn-success btn-lg text-dark m-2" data-toggle="modal" data-target="#agregarArticulo">
+              Agregar nuevo articulo <i class="fas fa-plus"></i>
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="agregarArticulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Con este formulario, usted podra crear agregar nuevos articulos.</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    {{>agregarArticulo}}
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
           <div class="table-responsive" id="cont-tabla">
             <table class="table mx-auto" id="tablaArticulos" 
-                data-show-print="false" 
+                data-show-print="true" 
                 data-show-columns="true"
                 data-show-toggle="true"
                 data-search="true"
@@ -23,11 +41,9 @@
                         <th data-field="producto">Producto</th>
                         <th data-field="descripcion">Descripcion</th>
                         <th data-field="categoria">Categoria</th>
-                        <th data-field="precioCompra">P. Compra</th>
-                        <th data-field="precioVenta">P. Venta</th>
-                        <th data-field="cantidad">Stock</th>
-                        <th data-field="cantidadVendidos">Cant. Vendidos</th>
-                        <th data-field="gananciaBruta">Ganancia Bruta</th>
+                        <th data-field="precio-costo">P. Costo</th>
+                        <th data-field="precio-venta">P. Venta</th>
+                        <th data-field="proveedor">Proveedor</th>
                         <th>Accion</th>
                     </tr>
                 </thead>
@@ -38,21 +54,20 @@
                             <td>{{producto}}</td>
                             <td>{{descripcion}}</td>
                             <td>{{categoria}}</td>
-                            <td>$ {{precioCompra}}</td>
+                            <td>$ {{precioCosto}}</td>
                             <td>$ {{precioVenta}}</td>
-                            <td>{{cantidad}}</td>
-                            <td>{{cantidadVendidos}}</td>
-                            <td>$ {{gananciaBruta}}</td>
+                            <td>{{proveedor}}</td>
                             <td>
-                              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalBorrar{{id}}">
+                              <!--<a href="mistock/delete/{{id}}" class="btn btn-danger">Borrar articulo</a>></a> -->
+                              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eliminar">
                                 <i class="fas fa-trash-alt"></i>
                               </button>
                               <!-- Modal -->
-                              <div class="modal fade" id="modalBorrar{{id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                              <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                   <div class="modal-content">
                                     <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar el articulo N {{id}}?</h5>
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar el articulo?</h5>
                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                       </button>
@@ -61,14 +76,13 @@
                                       El articulo se borrara de la base de datos y no podra recuperarse. Pero puede volver a crearlo.
                                     </div>
                                     <div class="modal-footer">
-                                      <a href="/mistock/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
+                                      <a href="/articulos/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                                <a href="/mistock/edit/{{id}}" class="btn btn-light btn-sm" id="botonEditar"><i class="fas fa-edit"></i></a>
-                                <a href="/mistock/vender/{{id}}" class="btn btn-success btn-sm" id="botonVender">Vender</a>
-                                <a href="/mistock/masuno/{{id}}" class="btn btn-warning btn-sm" id="botonMasUno">Vender Uno</a>
+                                <a href="/articulos/addtostock/{{id}}" class="btn btn-success btn-sm" id="botonAddToStock"><i class="fa fa-archive"></i></a>
+                                <a href="/articulos/edit/{{id}}" class="btn btn-light btn-sm" id="botonEditar"><i class="fas fa-edit"></i></a>
                             </td>
                         </tr>
                     {{/each}}

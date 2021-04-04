@@ -4,7 +4,7 @@
             <h4 class="text-center">Edicion de articulo N*: {{articulo.id}}</h4>
             <div class="card">
                 <div class="card-body">
-                    <form action="/mistock/edit/{{articulo.id}}" method="POST">
+                    <form action="/articulos/edit/{{articulo.id}}" method="POST">
                         <div class="form-group">
                             Producto:
                             <input type="text" value="{{articulo.producto}}" class="form-control" name="producto" autofocus>
@@ -22,34 +22,30 @@
                                 {{/if}}
                                 <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Categorias</label>
                                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="categoria">
-                                    <option selected>Actual: {{articulo.categoria}}</option>
+                                    <option selected>{{articulo.categoria}}</option>
                                     {{#each categorias}}
-                                    <option>Cambiar a: {{titulo}}</option>
+                                    <option>{{titulo}}</option>
                                     {{/each}}
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
-                            Precio Compra:
-                            <input type="number" value="{{articulo.precioCompra}}" name="precioCompra" class="form-control">
+                            Precio Costo:
+                            <input type="number" value="{{articulo.precioCosto}}" name="precioCosto" class="form-control">
                         </div>
                         <div class="form-group">
                             Precio Venta:
                             <input type="number" value="{{articulo.precioVenta}}" name="precioVenta" class="form-control">
                         </div>
                         <div class="form-group">
-                            Cantidad/Stock:
-                            <input type="number" value="{{articulo.cantidad}}" name="cantidad" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            Cantidad Vendidos:
-                            <input type="number" value="{{articulo.cantidadVendidos}}" name="cantidadVendidos" class="form-control">
+                            Proveedor:
+                            <input type="text" value="{{articulo.proveedor}}" name="proveedor" class="form-control">
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success">
                                 Guardar
                             </button>
-                            <a href="/mistock" class="btn btn-dark btn-sm">Cancelar</a>
+                            <a href="/articulos" class="btn btn-danger">Cancelar</a>
                         </div>
                     </form>
                 </div>

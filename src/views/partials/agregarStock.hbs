@@ -1,25 +1,41 @@
 <form action="/mistock/add" method="POST">
+    {{#if articulosCreados}}
+    <div class="form-row">
+        <div class="col-auto my-1">
+            <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Articulos</label>
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="pepe">
+                <option disabled>Seleccion aqui su articulo</option>
+                {{#each articulosCreados}}
+                <option value="{{this.producto}}">{{this.producto}}</option> 
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    {{else}}
+    No se encontraron articulos
     <div class="form-group">
         <input type="text" class="form-control" name="producto" placeholder="Producto" autofocus>
     </div>
+    {{/if}}
     <div class="form-group">
         <textarea id="" rows="2" class="form-control" name="descripcion" placeholder="Descripcion"></textarea>
     </div>
     {{#if categorias}}
     <div class="form-row">
         <div class="col-auto my-1">
+            <p>Categorias: </p>
             <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Categorias</label>
-            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="proveedor">
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="categoria">
                 <option selected>Categorias</option>
                 {{#each categorias}}
-                <option>{{this.titulo}}</option>
+                <option>{{this.titulo}}</option> 
                 {{/each}}
             </select>
         </div>
     </div>
     {{else}}
     <div class="form-group">
-        <input type="text" name="proveedor" class="form-control" placeholder="Categoria">
+        <input type="text" name="categoria" class="form-control" placeholder="Categoria">
     </div>
     {{/if}}
     <div class="form-group">
@@ -33,9 +49,6 @@
     </div>
     <div class="form-group">
         <input type="number" name="cantidadVendidos" class="form-control" placeholder="Cant. Vendidos (opcional)">
-    </div>
-    <div class="form-group">
-        <input type="url" name="foto" class="form-control" placeholder="Foto url">
     </div>
     <div class="form-group">
         <button class="btn btn-success">

@@ -5,14 +5,18 @@ const pool = require('../database');
 const { isLoggedIn } = require('../lib/auth');
 
 
-router.get('/add', isLoggedIn, (req, res) => {
-    res.render('miStock/add');
+router.get('/add/:id', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    const categorias = await pool.query('SELECT * FROM categorias WHERE user_id = ?', [req.user.id]);
+    const articulosCreados = await pool.query('SELECT * FROM articulos WHERE user_id = ?', [req.user.id]);
+    res.render('miStock/add', {categorias: categorias, articulosCreados: articulosCreados});
 });
 
-router.post('/add', isLoggedIn, async (req, res) => {
-    //Requerimos el objeto desde req.body
-    const { producto, descripcion, categoria, precioCompra, precioVenta, cantidad, cantidadVendidos, foto} = req.body;
-    //Almacenamos el objeto en una constante como objeto
+router.post('/edit/:id', isLoggedIn, async (req, res) => {
+    const { id } = req.params;
+    //Tambien quiero asegurarme de recibir los datos del formulario con req.body
+    //Estos son los datos nuevos que me envia el formulario
+    const { producto, descripcion, categoria, precioCompra, precioVenta, cantidad, cantidadVendidos } = req.body;
     const nuevoProducto = {
         producto,
         descripcion,
@@ -21,19 +25,66 @@ router.post('/add', isLoggedIn, async (req, res) => {
         precioVenta,
         cantidad,
         cantidadVendidos,
-        foto,
         user_id: req.user.id
     };
-    //Almacenamos el objeto en la base de datos
-    await pool.query('INSERT INTO stock set ?', [nuevoProducto]);
-    req.flash('success', 'Producto guardado correctamente!');
+    //Actualiza desde la tabla links un conjunto de datos en donde id sea igual a id
+    await pool.query('UPDATE stock set ? WHERE id = ?', [nuevoProducto, id]);
+    //Ejecutamos el metodo flash para enviar la alerta
+    req.flash('success', 'Articulo editado satisfactoriamente');
     res.redirect('/mistock');
 });
+
+//Ruta vieja con modal
+// router.post('/add/:id', isLoggedIn, async (req, res) => {
+//     let tito = "";
+//     //Requerimos el objeto desde req.body
+//     const { producto, descripcion, categoria, precioCompra, precioVenta, cantidad, cantidadVendidos, foto} = req.body;
+//     //Almacenamos el objeto en una constante como objeto
+//     const seleccionDeProductosXUsuario = await pool.query('SELECT producto FROM stock WHERE user_id = ?', [req.user.id]);
+//     seleccionDeProductosXUsuario.forEach((anibales) => {
+//         if (anibales.producto === producto) {
+//             return tito = producto;
+//         };
+//     });
+
+//     if (tito.length) {
+//         const updateProducto = {
+//             producto,
+//             descripcion,
+//             categoria,
+//             precioCompra,
+//             precioVenta,
+//             cantidad,
+//             cantidadVendidos,
+//             user_id: req.user.id
+//         };
+//         //Almacenamos el objeto en la base de datos
+//         await pool.query('UPDATE stock SET ? WHERE producto = ? AND user_id = ?', [updateProducto, tito, req.user.id]);
+//         req.flash('success', 'Producto guardado correctamente!');
+//         res.redirect('/mistock');
+//     } else {
+//         const nuevoProducto = {
+//             producto,
+//             descripcion,
+//             categoria,
+//             precioCompra,
+//             precioVenta,
+//             cantidad,
+//             cantidadVendidos,
+//             user_id: req.user.id
+//         };
+//         //Almacenamos el objeto en la base de datos
+//         await pool.query('INSERT INTO stock set ?', [nuevoProducto]);
+//         req.flash('success', 'Producto guardado correctamente!');
+//         res.redirect('/mistock');
+//     }
+// });
 
 router.get('/', isLoggedIn, async (req, res) => {
     const articulos = await pool.query('SELECT * FROM stock WHERE user_id = ?', [req.user.id]);
     const categorias = await pool.query('SELECT * FROM categorias WHERE user_id = ?', [req.user.id]);
-    res.render('mistock/tabla', {articulos: articulos, categorias: categorias});
+    const articulosCreados = await pool.query('SELECT * FROM articulos WHERE user_id = ?', [req.user.id]);
+    res.render('mistock/tabla', {articulos: articulos, categorias: categorias, articulosCreados: articulosCreados}); 
 });
 
 //Creamos una ruta especifica para escuchar el evento de eliminar etiqueta
@@ -111,7 +162,8 @@ router.get('/vender/:id', isLoggedIn, async (req, res) => {
 });
 
 router.post('/vender/:id', isLoggedIn, async (req, res) => {
-    const { producto, descripcion, cliente, cantidadVendidos, gananciaBruta, gananciaNeta, montoVenta } = req.body;
+    const { idArticulo, producto, descripcion, cliente, cantidadVendidos, gananciaBruta, gananciaNeta } = req.body;
+    const montoVenta = cantidadVendidos * gananciaBruta;
     const nuevoProducto = {
         producto,
         descripcion,
@@ -123,7 +175,17 @@ router.post('/vender/:id', isLoggedIn, async (req, res) => {
         user_id: req.user.id
     };
 
-    await pool.query('INSERT INTO ventasstock set ?', [nuevoProducto]);
+    let cantidad = nuevoProducto.cantidadVendidos;
+    let gananciaB = nuevoProducto.gananciaBruta;
+    let gananciaN = nuevoProducto.gananciaNeta;
+    let montoTotal = nuevoProducto.gananciaBruta * cantidad;
+    //console.log(parseFloat(nuevoProducto.cantidadVendidos));
+    await pool.query('UPDATE stock SET cantidad = cantidad - ? WHERE id = ?', [cantidad, idArticulo]);
+    await pool.query('UPDATE stock SET cantidadVendidos = cantidadVendidos + ? WHERE id = ?', [cantidad, idArticulo]);
+    await pool.query('UPDATE stock SET gananciaBruta = gananciaBruta + ? WHERE id = ?', [gananciaB, idArticulo]);
+    await pool.query('UPDATE stock SET gananciaNeta = gananciaNeta + ? WHERE id = ?', [gananciaN, idArticulo]);
+    
+    await pool.query('INSERT INTO ventasstock SET ?', [nuevoProducto]);
     req.flash('success', 'Producto guardado correctamente!');
     res.redirect('/mistock');
 });

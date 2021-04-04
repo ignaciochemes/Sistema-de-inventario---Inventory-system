@@ -1,0 +1,55 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/compras/add" method="POST">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="producto" placeholder="Producto" autofocus>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="" rows="2" class="form-control" name="descripcion" placeholder="Descripcion"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="precioCompra" class="form-control" placeholder="Precio Compra c/u">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="precioVenta" class="form-control" placeholder="Precio Venta c/u">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="cantidadComprados" class="form-control" placeholder="Cantidad/Stock comprados">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="gastosEnvio" class="form-control" placeholder="Gastos Envio">
+                        </div>
+                        <div class="form-group">
+                            <input type="number" name="gastosVarios" class="form-control" placeholder="Gastos Varios">
+                        </div>
+                        {{#if proveedores}}
+                        <div class="form-row">
+                            <div class="col-auto my-1">
+                                <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Proveedores</label>
+                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="proveedor">
+                                    <option selected>Proveedores</option>
+                                    {{#each proveedores}}
+                                    <option>{{this.empresa}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        {{else}}
+                        <div class="form-group">
+                            <input type="text" name="proveedor" class="form-control" placeholder="Proveedor">
+                        </div>
+                        {{/if}}
+                        <div class="form-group">
+                            <button class="btn btn-success">
+                                Agregar nueva compra
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

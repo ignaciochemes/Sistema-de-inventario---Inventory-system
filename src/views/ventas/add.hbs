@@ -1,12 +1,31 @@
 <div class="container p-4">
+    <h1 class="text-center">Agregar nueva venta masiva</h1>
+    <br>
     <div class="row">
         <div class="col-md-4 mx-auto">
             <div class="card">
                 <div class="card-body">
                     <form action="/ventas/add" method="POST">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="producto" placeholder="Producto" autofocus>
+                        {{#if productos}}
+                        <div class="form-row">
+                            <div class="col-auto my-1">
+                                <p>Productos: </p>
+                                <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Productos</label>
+                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="producto">
+                                    <option selected>Actual: {{productos.producto}}</option>
+                                    {{#each productos}}
+                                    <option>{{producto}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
                         </div>
+                        {{else}}
+                        <p>Si no tiene productos, puede agregarlos <a href="/mistock">AQUI</a></p>
+                        <div class="form-group">
+                            <label for="producto">Si no encuentra el producto, puede ingresarlo manualmente. Caso contrario dejar en blanco.</label>
+                            <input type="text" class="form-control" id="producto" name="producto" placeholder="Producto" autofocus>
+                        </div>
+                        {{/if}}
                         <div class="form-group">
                             <textarea id="" rows="2" class="form-control" name="descripcion" placeholder="Descripcion"></textarea>
                         </div>
@@ -25,6 +44,14 @@
                             </button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mx-auto">
+            <div class="card">
+                <h4 class="mx-auto">Listado de productos en stock:</h4>
+                <div class="card-body">
+                {{>tablaVentaMasiva}}
                 </div>
             </div>
         </div>

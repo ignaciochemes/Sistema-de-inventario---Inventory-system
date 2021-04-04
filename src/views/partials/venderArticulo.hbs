@@ -1,7 +1,11 @@
 <form action="/mistock/vender/{{id}}" method="POST">
     <div class="form-group">
+        Articulo ID: 
+        <input type="text" onKeyDown="return false;" value="{{id}}" class="form-control" name="idArticulo">
+    </div>
+    <div class="form-group">
         Producto:
-        <input type="text" value="{{producto}}" class="form-control" name="producto" autofocus>
+        <input type="text" onKeyDown="return false" value="{{producto}}" class="form-control" name="producto" autofocus>
     </div>
     <div class="form-group">
         Descripcion:
@@ -13,22 +17,20 @@
     </div>
     <div class="form-group">
         Cantidad a vender:
-        <input type="number" id="cantidad" value="totalbread1" name="cantidadVendidos" class="form-control">
+        <input type="number" id="cantidad{{id}}" value="totalbread1" name="cantidadVendidos" class="form-control">
     </div>
     <div class="form-group">
         Precio Venta:
-        <input type="number" id="precioVenta" value="{{articulo.precioVenta}}" name="gananciaBruta" class="form-control">
-        Ganancia Bruta: $ <span id="ganancia_bruta"></span>
+        <input type="text" id="precioVenta{{id}}" onKeyDown="return false;" value="{{precioVenta}}" name="gananciaBruta" class="form-control">
+        Ganancia Bruta: $ <span id="ganancia_bruta{{id}}"></span>
     </div>
     <div class="form-group">
         Precio Compra:
-        <input type="number" id="precioCompra" name="gananciaNeta" class="form-control">
-        Ganancia Neta: $ <span id="ganancia_neta"></span>
+        <input type="text" id="precioCompra{{id}}" onKeyDown="return false;" value="{{precioCompra}}" name="gananciaNeta" class="form-control">
+        Ganancia Neta: $ <span id="ganancia_neta{{id}}"></span>
     </div>
     <div class="form-group">
-        Monto total de la venta:
-        <input type="text" name="montoVenta" class="form-control">
-        <input id="button1" type="button" class="btn btn-info btn-sm" value="Actualizar Monto total de la venta" />
+        Monto total de la venta: $ <span id="monto_venta{{id}}"></span>
     </div>
     <div class="form-group">
         <button class="btn btn-success">
@@ -40,20 +42,14 @@
 <script>
 $('input').keyup(function(){
 
-    var cantidad = parseFloat($('#cantidad').val());
-    var precioVenta = parseFloat($('#precioVenta').val());
-    var precioCompra = parseFloat($('#precioCompra').val());
-    var montoTotal = parseFloat($('#montoTotal').val());
+    var cantidad = parseFloat($('#cantidad{{id}}').val());
+    var precioVenta = parseFloat($('#precioVenta{{id}}').val());
+    var precioCompra = parseFloat($('#precioCompra{{id}}').val());
+    var montoTotal = parseFloat($('#montoTotal{{id}}').val());
 
-    $('#ganancia_bruta').html(cantidad * precioVenta);
-    $('#ganancia_neta').html((cantidad * precioVenta) - (cantidad * precioCompra));
+    $('#ganancia_bruta{{id}}').html(cantidad * precioVenta);
+    $('#ganancia_neta{{id}}').html((cantidad * precioVenta) - (cantidad * precioCompra));
+    $('#monto_venta{{id}}').html((cantidad * precioVenta));
 
-});
-$(document).ready(function(){ 
-  $('#button1').click(function(){
-      var cantidad = parseFloat($('#cantidad').val());
-      var precioVenta = parseFloat($('#precioVenta').val());
-  $('input[name="montoVenta"]').val(cantidad * precioVenta);
-   });
 });
 </script>

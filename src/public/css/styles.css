@@ -4,7 +4,7 @@
 .fa-2x {
 font-size: 2em;
 }
-.fa {
+#fa2 {
 position: relative;
 display: table-cell;
 width: 60px;
@@ -13,7 +13,6 @@ text-align: center;
 vertical-align: middle;
 font-size:20px;
 }
-
 
 .main-menu:hover,nav.main-menu.expanded {
 width:250px;
@@ -133,7 +132,7 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
-.index {
+#indexId {
   width: 100vw;
   height: 100vh;
 }

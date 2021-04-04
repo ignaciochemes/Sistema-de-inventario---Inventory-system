@@ -5,10 +5,12 @@
                 <div class="card-body">
                     <form action="/categorias/edit/{{categoria.id}}" method="POST">
                         <div class="form-group">
-                            <input type="text" value="{{categoria.titulo}}" class="form-control" name="title" placeholder="Categoria" autofocus>
+                            <p>Nombre de la categoria</p>
+                            <input type="text" value="{{categoria.titulo}}" class="form-control" name="titulo" autofocus>
                         </div>
                         <div class="form-group">
-                            <textarea name="descripcion" id="" rows="2" class="form-control" placeholder="Descripcion">{{categoria.descripcion}}</textarea>
+                            <p>Descripcion</p>
+                            <textarea name="descripcion" id="" rows="2" class="form-control">{{categoria.descripcion}}</textarea>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-success">
