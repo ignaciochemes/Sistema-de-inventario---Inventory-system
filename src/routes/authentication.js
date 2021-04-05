@@ -32,8 +32,10 @@ router.post('/signin', isNotLoggedIn, (req, res, next) => {
 router.get('/profile', isLoggedIn, async (req, res) => {
     const gananciasBrutas = await pool.query('SELECT gananciaBrutaTotal FROM stock WHERE user_id = ?', [req.user.id]);
     const gananciasNetas = await pool.query('SELECT gananciaNetaTotal FROM stock WHERE user_id = ?', [req.user.id]);
-    console.log(gananciasBrutas[0], gananciasNetas[0]);
-    res.render('profile2', {gananciasBrutas: gananciasBrutas[0], gananciasNetas: gananciasNetas[0]});
+    const articulos = await pool.query('SELECT producto FROM articulos WHERE user_id = ?', [req.user.id]);
+    //const gastosProductos = await pool.query('SELECT precioCosto, cantidadIngresados FROM comprastock WHERE user_id = ?', [req.user.id]);
+    const articulosOrdenados = await pool.query('SELECT producto, cantidadVendidos FROM stock WHERE user_id = ? ORDER BY cantidadVendidos DESC', [req.user.id])
+    res.render('profile2', {gananciasBrutas: gananciasBrutas[0], gananciasNetas: gananciasNetas[0], articulos: articulos, articulosOrdenados: articulosOrdenados});
 });
 
 router.get('/logout', isLoggedIn, (req, res) => {

@@ -6,7 +6,6 @@ const { isLoggedIn, isNotLoggedIn } = require('../lib/auth');
 
 router.get('/', isLoggedIn, async (req, res) => {
     const proveedores = await pool.query('SELECT * FROM proveedores WHERE user_id = ?', [req.user.id]);
-    console.log(proveedores);
     res.render('proveedores/proveedores', {proveedor: proveedores});
 });
 

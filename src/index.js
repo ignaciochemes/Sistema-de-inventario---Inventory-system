@@ -11,7 +11,12 @@ const { database } = require('./keys');
 
 //Inicio express y extras
 const app = express();
+//const socketio = require('socket.io');
 require('./lib/passport');
+
+//Socket IO
+//const server = require('http').Server(app);
+//const io = socketio(server);
 
 //Opciones
 app.set('port', process.env.PORT || 4000);

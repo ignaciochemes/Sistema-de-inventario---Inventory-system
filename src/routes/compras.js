@@ -8,29 +8,54 @@ const { isLoggedIn } = require('../lib/auth');
 router.get('/', isLoggedIn, async (req, res) => {
     const compra = await pool.query('SELECT * FROM comprastock WHERE user_id = ?', [req.user.id]);
     const proveedor = await pool.query('SELECT * FROM proveedores WHERE user_id = ?', [req.user.id]);
-    res.render('compras/tabla', {compras: compra, proveedores: proveedor});
+    const categorias = await pool.query('SELECT titulo FROM categorias WHERE user_id = ?', [req.user.id]);
+    res.render('compras/tabla', {compras: compra, proveedores: proveedor, categorias: categorias});
 });
 
 router.get('/add', isLoggedIn, async (req, res) => {
     const proveedores = await pool.query('SELECT * FROM proveedores WHERE user_id = ?', [req.user.id]);
+    //const categorias = await pool.query('SELECT titulo FROM categorias WHERE user_id = ?', [req.user.id]);
     res.render('compras/add', {proveedores: proveedores});
 });
 
 router.post('/add', isLoggedIn, async (req, res) => {
-    const { producto, descripcion, precioCompra, precioVenta, cantidadComprados, gastosEnvio, gastosVarios, proveedor } = req.body;
+    let pedro;
+    let existeArticulo = await pool.query('SELECT article_id FROM comprastock ORDER BY comprastock.article_id ASC LIMIT 1');
+    if (!existeArticulo[0]) {
+        pedro = 1;
+    };
+    if (existeArticulo[0]) {
+        console.log('si')
+        pedro = existeArticulo[0].article_id + 1;
+    };
+    const { producto, descripcion, categoria, precioCosto, precioVenta, cantidadIngresados, gastosEnvio, gastosVarios, proveedor } = req.body;
     const nuevoProducto = {
         producto,
         descripcion,
-        precioCompra,
+        categoria,
+        precioCosto,
         precioVenta,
-        cantidadComprados,
+        cantidadIngresados,
         gastosEnvio,
         gastosVarios,
         proveedor,
+        article_id: pedro,
+        user_id: req.user.id
+    };
+    const nuevoProductoEnArticulos = {
+        producto,
+        descripcion,
+        categoria,
+        precioCosto,
+        precioVenta,
+        cantidadIngresados,
+        proveedor,
+        article_id: pedro,
         user_id: req.user.id
     };
 
     await pool.query('INSERT INTO comprastock set ?', [nuevoProducto]);
+    await pool.query('INSERT INTO articulos set ?', [nuevoProductoEnArticulos]);
     req.flash('success', 'Compra guardada correctamente!');
     res.redirect('/compras');
 });
@@ -57,20 +82,32 @@ router.get('/edit/:id', isLoggedIn, async (req, res) => {
 
 router.post('/edit/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
-    const { producto, descripcion, categoria, precioCompra, precioVenta, cantidadComprados, gastosEnvio, gastosVarios, proveedor } = req.body;
+    const { producto, descripcion, categoria, precioCosto, precioVenta, cantidadIngresados, gastosEnvio, gastosVarios, proveedor } = req.body;
+    let seleccionArticleId = await pool.query('SELECT article_id FROM comprastock WHERE id = ?', [id]);
     const nuevoProducto = {
         producto,
         descripcion,
         categoria,
-        precioCompra,
+        precioCosto,
         precioVenta,
-        cantidadComprados,
+        cantidadIngresados,
         gastosEnvio,
         gastosVarios,
         proveedor,
         user_id: req.user.id
     };
-    await pool.query('UPDATE comprastock set ? WHERE id = ?', [nuevoProducto, id]);
+    const updateProductoEnArticulos = {
+        producto,
+        descripcion,
+        categoria,
+        precioCosto,
+        precioVenta,
+        cantidadIngresados,
+        proveedor,
+        user_id: req.user.id
+    };
+    await pool.query('UPDATE comprastock SET ? WHERE id = ?', [nuevoProducto, id]);
+    await pool.query('UPDATE articulos SET ? WHERE article_id = ?', [updateProductoEnArticulos, seleccionArticleId[0].article_id]);
     req.flash('success', 'Compra editada satisfactoriamente');
     res.redirect('/compras');
 });

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const io = require('../index');
 
 const pool = require('../database');
 const { isLoggedIn } = require('../lib/auth');
@@ -52,6 +53,5 @@ router.post('/addbanco', isLoggedIn, async (req, res) => {
         res.redirect('/cartera');
     };
 });
-
 
 module.exports = router;

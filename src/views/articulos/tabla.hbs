@@ -7,7 +7,7 @@
       <h1 class="text-center p-4">Tabla de articulos</h1>
         <div class="container text-center">
             <button type="button" class="btn btn-success btn-lg text-dark m-2" data-toggle="modal" data-target="#agregarArticulo">
-              Agregar nuevo articulo <i class="fas fa-plus"></i>
+              Agregar nuevo articulo SIN realizar una compra <i class="fas fa-plus"></i>
             </button>
             <!-- Modal -->
             <div class="modal fade" id="agregarArticulo" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -27,7 +27,7 @@
             </div>
         </div>
           <div class="table-responsive" id="cont-tabla">
-            <table class="table mx-auto" id="tablaArticulos" 
+            <table class="table mx-auto table-sm" id="tablaArticulos" 
                 data-show-print="true" 
                 data-show-columns="true"
                 data-show-toggle="true"
@@ -51,6 +51,48 @@
                 <tbody id="mitabla">
                     {{#each articulos}}
                         <tr>
+                          {{#ifMayor cantidadIngresados 5}}
+                            <td style="background-color: #ff7676;">{{id}}</td>
+                            <td style="background-color: #ff7676;">{{producto}}</td>
+                            <td style="background-color: #ff7676;">{{descripcion}}</td>
+                            <td style="background-color: #ff7676;">{{categoria}}</td>
+                            <td style="background-color: #ff7676;">$ {{precioCosto}}</td>
+                            <td style="background-color: #ff7676;">$ {{precioVenta}}</td>
+                            <td style="background-color: #ff7676;">{{cantidadIngresados}}</td>
+                            <td style="background-color: #ff7676;">{{proveedor}}</td>
+                            <td style="background-color: #ff7676;">
+                              <!--<a href="mistock/delete/{{id}}" class="btn btn-danger">Borrar articulo</a>></a> -->
+                              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#eliminar">
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="eliminar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar el articulo?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      El articulo se borrara de la base de datos y no podra recuperarse. Pero puede volver a crearlo.
+                                    </div>
+                                    <div class="modal-footer">
+                                      <a href="/articulos/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              {{#if cantidadIngresados}}
+                                <a href="/articulos/addtostock/{{id}}" class="btn btn-success btn-sm" id="botonAddToStock"><i class="fa fa-archive"></i></a>
+                              {{else}}
+                                <a href="/articulos/addtostock/{{id}}" class="btn btn-success btn-sm" id="botonAddToStock" hidden><i class="fa fa-archive"></i></a>
+                                <a href="/articulos/addnuevoingreso/{{id}}" class="btn btn-success btn-sm" id="botonAddToStock">Agregar Ingreso</a>
+                              {{/if}}  
+                                <a href="/articulos/edit/{{id}}" class="btn btn-light btn-sm" id="botonEditar"><i class="fas fa-edit"></i></a>
+                            </td>
+                            {{else}}
                             <td>{{id}}</td>
                             <td>{{producto}}</td>
                             <td>{{descripcion}}</td>
@@ -86,6 +128,7 @@
                                 <a href="/articulos/addtostock/{{id}}" class="btn btn-success btn-sm" id="botonAddToStock"><i class="fa fa-archive"></i></a>
                                 <a href="/articulos/edit/{{id}}" class="btn btn-light btn-sm" id="botonEditar"><i class="fas fa-edit"></i></a>
                             </td>
+                            {{/ifMayor}}
                         </tr>
                     {{/each}}
                 </tbody>

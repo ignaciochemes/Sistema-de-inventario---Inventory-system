@@ -19,15 +19,71 @@
       <div class="card text-white bg-danger mb-3">
         <div class="card-header">Gastos</div>
             <div class="card-body">
-                <h5 class="card-title">Gastos Productos: $ 1410.50</h5>
+                <h5 class="card-title">Tengo que hacerlo!</h5>
                 <h5 class="card-title">Gastos Envios: $ 2010.50</h5>
-            </div>
+        </div>
     </div>
   </div>
-  <div class="infoTres"></div>
-  <div class="infoCuatro"></div>
-  <div class="infoCinco"></div>
-  <div class="infoSeis"></div>
+  <div id="chart" class="infoTres"></div>
+  <div class="infoCuatro">
+    <div class="card text-white bg-danger mb-3">
+        <div class="card-header">Gastos</div>
+            <div class="card-body">
+                <h5 class="card-title">Tengo que hacerlo!</h5>
+                <h5 class="card-title">Gastos Envios: $ 2010.50</h5>
+        </div>
+    </div>
+  </div>
+  <div class="infoCinco">
+    <div class="card text-white bg-danger mb-3">
+        <div class="card-header">Gastos</div>
+            <div class="card-body">
+                <h5 class="card-title">Tengo que hacerlo!</h5>
+                <h5 class="card-title">Gastos Envios: $ 2010.50</h5>
+        </div>
+    </div>
+  </div>
+  <div class="infoSeis">
+    <div class="card text-white bg-danger mb-3">
+        <div class="card-header">Gastos</div>
+            <div class="card-body">
+                <h5 class="card-title">Tengo que hacerlo!</h5>
+                <h5 class="card-title">Gastos Envios: $ 2010.50</h5>
+        </div>
+    </div>
+  </div>
   <div class="infoSiete"></div>
   <div class="infoOcho"></div>
 </div>
+<script>
+//let hola = ['{{articulos.0.producto}}'];
+//hola.forEach(e => console.log(e));
+var options = {
+  series: [{
+  data: ['{{articulosOrdenados.0.cantidadVendidos}}', '{{articulosOrdenados.1.cantidadVendidos}}', '{{articulosOrdenados.2.cantidadVendidos}}']
+  }],
+    chart: {
+    type: 'bar',
+    height: 350
+  },
+  plotOptions: {
+    bar: {
+      borderRadius: 4,
+      horizontal: true,
+    }
+  },
+  dataLabels: {
+    enabled: false
+  },
+  xaxis: {
+    categories: ['{{articulosOrdenados.0.producto}}', '{{articulosOrdenados.1.producto}}', '{{articulosOrdenados.2.producto}}']
+  },
+  title: {
+      text: 'Articulos mas vendidos',
+      align: 'center',
+      floating: true
+  },
+};
+var chart = new ApexCharts(document.querySelector("#chart"), options);
+chart.render();
+</script>

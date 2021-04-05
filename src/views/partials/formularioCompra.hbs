@@ -5,14 +5,32 @@
     <div class="form-group">
         <textarea id="" rows="2" class="form-control" name="descripcion" placeholder="Descripcion"></textarea>
     </div>
+    {{#if categorias}}
+    <div class="form-row">
+        <div class="col-auto my-1">
+            <p>Categorias: </p>
+            <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Categorias</label>
+            <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="categoria">
+                <option selected>Categorias</option>
+                {{#each categorias}}
+                <option>{{this.titulo}}</option> 
+                {{/each}}
+            </select>
+        </div>
+    </div>
+    {{else}}
     <div class="form-group">
-        <input type="number" name="precioCompra" class="form-control" placeholder="Precio Compra c/u">
+        <input type="text" name="categoria" class="form-control" placeholder="Categoria">
+    </div>
+    {{/if}}
+    <div class="form-group">
+        <input type="number" name="precioCosto" class="form-control" placeholder="Precio Compra c/u">
     </div>
     <div class="form-group">
         <input type="number" name="precioVenta" class="form-control" placeholder="Precio Venta c/u">
     </div>
     <div class="form-group">
-        <input type="number" name="cantidadComprados" class="form-control" placeholder="Cantidad/Stock comprados">
+        <input type="number" name="cantidadIngresados" class="form-control" placeholder="Cantidad/Stock comprados">
     </div>
     <div class="form-group">
         <input type="number" name="gastosEnvio" class="form-control" placeholder="Gastos Envio">

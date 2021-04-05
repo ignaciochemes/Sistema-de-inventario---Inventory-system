@@ -6,13 +6,13 @@ const { isLoggedIn } = require('../lib/auth');
 
 
 router.get('/', isLoggedIn, async (req, res) => {
-    const venta = await pool.query('SELECT * FROM ventasstock WHERE user_id = ?', [req.user.id]);
+    const venta = await pool.query('SELECT * FROM ventasstock WHERE user_id = ? ORDER BY id DESC', [req.user.id]);
     res.render('ventas/tabla', {ventas: venta}); 
 });
 
 router.get('/add', isLoggedIn, async (req, res) => {
     const producto = await pool.query('SELECT id, producto FROM stock WHERE user_id = ?', [req.user.id]);
-    res.render('ventas/add', {productos: producto});
+    res.render('ventas/add', {productos: producto}); 
 });
 
 router.post('/add', isLoggedIn, async (req, res) => {

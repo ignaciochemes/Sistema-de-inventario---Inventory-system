@@ -151,6 +151,22 @@ router.get('/masuno/:id', async (req, res) => {
     await pool.query('UPDATE stock SET gananciaNeta = (precioVenta - precioCompra) * cantidadVendidos WHERE id = ?', [id]);
     await pool.query('UPDATE stock SET gananciaBrutaTotal = (SELECT SUM(gananciaBruta) FROM stock WHERE user_id = ?) WHERE user_id = ?', [req.user.id, req.user.id]);
     await pool.query('UPDATE stock SET gananciaNetaTotal = (SELECT SUM(gananciaNeta) FROM stock WHERE user_id = ?) WHERE user_id = ?', [req.user.id, req.user.id]);
+    
+    const selectNA2 = await pool.query('SELECT * FROM stock WHERE id = ?', [id]);
+    const artVentaInsertar = {
+        producto: selectNA2[0].producto,
+        descripcion: selectNA2[0].descripcion,
+        cliente: 'Venta Rapida',
+        cantidadVendidos: 1,
+        gananciaBruta: selectNA2[0].precioVenta,
+        gananciaNeta: selectNA2[0].precioVenta - selectNA2[0].precioCompra,
+        montoVenta: selectNA2[0].precioVenta,
+        user_id: req.user.id
+    };
+    await pool.query('INSERT INTO ventasstock SET ?', [artVentaInsertar]);
+    //await pool.query('UPDATE ventasstock SET gananciaBruta = (SELECT precioVenta FROM stock WHERE id = ?) WHERE id = ?', [id, id]);
+    //await pool.query('UPDATE ventasstock SET gananciaNeta = (SELECT precioCompra FROM stock WHERE id = ?) WHERE id = ?', [id, id]);
+    //await pool.query('UPDATE ventasstock SET montoVenta = gananciaBruta WHERE id = ?', [id]);
     req.flash('success', 'Articulo vendido!');
     res.redirect('/mistock')
 });
@@ -158,7 +174,7 @@ router.get('/masuno/:id', async (req, res) => {
 router.get('/vender/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
     const articulos = await pool.query('SELECT * FROM stock WHERE id = ?', [id]);
-    res.render('mistock/vender', {articulo: articulos});
+    res.render('mistock/vender', {articulo: articulos[0]});
 });
 
 router.post('/vender/:id', isLoggedIn, async (req, res) => {

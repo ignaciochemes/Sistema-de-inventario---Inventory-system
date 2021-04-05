@@ -22,16 +22,16 @@
                                 {{/if}}
                                 <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Categorias</label>
                                 <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="categoria">
-                                    <option value="Actual:" selected>{{compra.categoria}}</option>
+                                    <option selected>{{compra.categoria}}</option>
                                     {{#each categorias}}
-                                    <option value="Cambiar a:">{{titulo}}</option>
+                                    <option>{{titulo}}</option>
                                     {{/each}}
                                 </select>
                             </div>
                         </div>
                         <div class="form-group">
                             Precio Compra:
-                            <input type="number" value="{{compra.precioCompra}}" name="precioCompra" class="form-control" placeholder="Precio Compra: {{articulo.precioCompra}}">
+                            <input type="number" value="{{compra.precioCosto}}" name="precioCosto" class="form-control" placeholder="Precio Compra: {{articulo.precioCompra}}">
                         </div>
                         <div class="form-group">
                             Precio Venta:
@@ -39,7 +39,7 @@
                         </div>
                         <div class="form-group">
                             Cantidad Comprados:
-                            <input type="number" value="{{compra.cantidadComprados}}" name="cantidadComprados" class="form-control">
+                            <input type="number" value="{{compra.cantidadIngresados}}" name="cantidadIngresados" class="form-control">
                         </div>
                         <div class="form-group">
                             Gastos Envio:
