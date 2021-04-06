@@ -1,0 +1,88 @@
+<div class="grid-container3">
+  <div class="stockInfoUno p-2">
+      <div class="card text-white bg-dark w-100 h-100">
+        <div class="card-header">Tabla de reportes</div>
+            <div class="card-body">
+                <h5 class="card-title">Informacion!</h5>
+                <p class="card-text">En esta tabla usted encontrara todos los reportes que sean generados. Al final de la pagina encontrara informacion mas detallada.</p>
+            </div>
+    </div>
+  </div>
+  <div class="sotckInfoDos p-2">
+      <div class="card text-dark bg-light w-100 h-100">
+        <a href="/reportes/reporteinventario/{{id}}" class="btn btn-danger btn-bg m-2" id="botonEditar"><i class="fas fa-edit"></i>Generar reporte de inventario</a>
+        <a href="/reportes/reportecaja/{{id}}" class="btn btn-warning btn-bg m-2" id="botonEditar"><i class="fas fa-edit"></i>Generar reporte de Caja</a>
+        <a href="/reportes/reportebanco/{{id}}" class="btn btn-dark btn-bg m-2" id="botonEditar"><i class="fas fa-edit"></i>Generar reporte de Banco</a>
+    </div>
+  </div>
+  <div class="stockInfoTres">
+      <div class="table-responsive" id="cont-tabla">
+            <table class="table mx-auto table-sm" id="tablaArticulos" 
+                data-show-print="false" 
+                data-show-columns="true"
+                data-show-toggle="true"
+                data-search="true"
+                data-pagination="true" 
+                data-page-size="10"
+                data-resizable="true">
+                <thead>
+                    <tr>
+                        <th data-field="id">Id</th>
+                        <th data-field="tipoDeReporte">Tipo de reporte</th>
+                        <th data-field="fechaDeReporte">Fecha de reporte</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody id="mitabla">
+                    {{#each dataComprobanteMaster}}    
+                        <tr>
+                            {{#ifMetodo tipoDeReporte 'Inventario'}}
+                            <td style="background-color: #ff7676;">{{numeroComprobante}}</td>
+                            <td style="background-color: #ff7676;">{{tipoDeReporte}}</td>
+                            <td style="background-color: #ff7676;">{{momentAgo created_at}}</td>
+                            <td class="text-center" style="background-color: #ff7676;"><a href="/reportes/detalles/{{numeroComprobante}}" class="btn btn-light btn-sm" id="verDetalles"><i class="fas fa-info-circle"></i></a></td>
+                            {{/ifMetodo}}
+                        </tr>
+                    {{/each}}    
+                </tbody>
+            </table>
+        </div>
+  </div>
+  <div class="stockInfoCuatro">
+      <div class="card text-white bg-dark w-100 h-100">
+        <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Acciones de la tabla</h5>
+                <p><i class="btn btn-danger btn-sm fas fa-trash-alt"></i> Para eliminar de la tabla STOCK el articulo</p>
+                <p><i class="btn btn-success btn-sm fas fa-truck-loading"></i> Para realizar ventas en cantidad del producto</p>
+                <p><i class="btn btn-warning btn-sm fas fa-cash-register"></i> Para vender un solo producto cobrando en efectivo</p>
+                <p><i class="btn btn-primary btn-sm fas fa-credit-card"></i> Para vender un solo producto cobrando con tarjeta</p>
+                <p></p>
+            </div>
+    </div>
+  </div>
+  <div class="StockInfoCinco">
+      <div class="card text-light bg-secondary w-100 h-100">
+        <div class="card-header">Mas informacion</div>
+            <div class="card-body">
+                <p class="card-text">Al agregar stock sin realizar una compra, no afectara a su estado de cuenta a menos que venda los productos que tenga en stock.</p>
+            </div>
+    </div>
+  </div>
+  <div class="stockInfoSeis">
+      <div class="card text-white bg-dark w-100 h-100">
+        <div class="card-header">Almacenamiento</div>
+            <div class="card-body">
+                <h5 class="card-title">Articulos en STOCK</h5>
+                <p class="card-text">Usted tiene actualmente {{sumaArticulos}} productos almacenados</p>
+            </div>
+    </div>
+  </div>
+</div>
+<script>
+  var $table = $('#tablaArticulos')
+
+  $(function() {
+    $table.bootstrapTable()
+  })
+</script> 

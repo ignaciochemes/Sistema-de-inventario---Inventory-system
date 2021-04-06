@@ -1,0 +1,174 @@
+<div class="grid-container3">
+  <div class="stockInfoUno">
+      <div class="card text-white bg-dark w-100 h-100">
+        <div class="card-header">Tabla de Stock</div>
+            <div class="card-body">
+                <h5 class="card-title">Informacion!</h5>
+                <p class="card-text">En esta tabla usted encontrara todos los articulos que TIENE ALMACENADO en stock. Luego de la tabla encontrara informacion detallada.</p>
+            </div>
+    </div>
+  </div>
+  <div class="sotckInfoDos">
+      <div class="card text-dark bg-light w-100 h-100">
+        <div class="card-header">Cartera</div>
+            <div class="card-body">
+                <h5 class="card-title">Informacion actual de la cartera:</h5>
+                <h4 class="card-text">Saldo en efectivo: ${{cartera.dineroEfectivo}}</h4>
+                <h4 class="card-text">Saldo en el banco: ${{cartera.dineroBanco}}</h4>
+            </div>
+    </div>
+  </div>
+  <div class="stockInfoTres">
+      <div class="table-responsive" id="cont-tabla">
+            <table class="table mx-auto table-sm" id="tablaArticulos" 
+                data-show-print="false" 
+                data-show-columns="true"
+                data-show-toggle="true"
+                data-search="true"
+                data-pagination="true" 
+                data-page-size="10"
+                data-resizable="true">
+                <thead>
+                    <tr>
+                        <th data-field="id">Id</th>
+                        <th data-field="producto">Producto</th>
+                        <th data-field="descripcion">Descripcion</th>
+                        <th data-field="categoria">Categoria</th>
+                        <th data-field="precioCompra">P. Compra</th>
+                        <th data-field="precioVenta">P. Venta</th>
+                        <th data-field="cantidad">Stock</th>
+                        <th data-field="cantidadVendidos">Cant. Vendidos</th>
+                        <th data-field="gananciaBruta">Ganancia Bruta</th>
+                        <th>Accion</th>
+                    </tr>
+                </thead>
+                <tbody id="mitabla">
+                    {{#each articulos}}
+                        <tr>
+                          {{#ifMayor cantidad 5}}
+                            <td style="background-color: #ff7676;">{{id}}</td>
+                            <td style="background-color: #ff7676;">{{producto}}</td>
+                            <td style="background-color: #ff7676;">{{descripcion}}</td>
+                            <td style="background-color: #ff7676;">{{categoria}}</td>
+                            <td style="background-color: #ff7676;">$ {{precioCompra}}</td>
+                            <td style="background-color: #ff7676;">$ {{precioVenta}}</td>
+                            <td style="background-color: #ff7676;">{{cantidad}}</td>
+                            <td style="background-color: #ff7676;">{{cantidadVendidos}}</td>
+                            <td style="background-color: #ff7676;">$ {{gananciaBruta}}</td>
+                            <td style="background-color: #ff7676;">
+                              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalBorrar{{id}}">
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="modalBorrar{{id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar el articulo N {{id}}?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      El articulo se borrara de la base de datos y no podra recuperarse. Pero puede volver a crearlo.
+                                    </div>
+                                    <div class="modal-footer">
+                                      <a href="/mistock/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                                <a href="/mistock/edit/{{id}}" class="btn btn-light btn-sm" id="botonEditar"><i class="fas fa-edit"></i></a>
+                              {{#if cantidad}}
+                                <a href="/mistock/vender/{{id}}" class="btn btn-success btn-sm" id="botonVender"><i class="fas fa-truck-loading"></i></a>
+                                <a href="/mistock/masunoefectivo/{{id}}" class="btn btn-warning btn-sm" id="botonMasUno"><i class="fas fa-cash-register"></i></a>
+                                <a href="/mistock/masunobanco/{{id}}" class="btn btn-primary btn-sm" id="botonMasUnoBanco"><i class="fas fa-credit-card"></i></a>
+                              {{else}}
+                                <a href="/mistock/vender/{{id}}" class="btn btn-success btn-sm" id="botonVender" hidden><i class="fas fa-truck-loading"></i></a>
+                                <a href="/mistock/masunoefectivo/{{id}}" class="btn btn-warning btn-sm" id="botonMasUno" hidden><i class="fas fa-cash-register"></i></a>
+                                <a href="/mistock/masunobanco/{{id}}" class="btn btn-primary btn-sm" id="botonMasUnoBanco" hidden><i class="fas fa-credit-card"></i></a>
+                              {{/if}}
+                            </td>
+                            {{else}}
+                            <td>{{id}}</td>
+                            <td>{{producto}}</td>
+                            <td>{{descripcion}}</td>
+                            <td>{{categoria}}</td>
+                            <td>$ {{precioCompra}}</td>
+                            <td>$ {{precioVenta}}</td>
+                            <td>{{cantidad}}</td>
+                            <td>{{cantidadVendidos}}</td>
+                            <td>$ {{gananciaBruta}}</td>
+                            <td>
+                              <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalBorrar{{id}}">
+                                <i class="fas fa-trash-alt"></i>
+                              </button>
+                              <!-- Modal -->
+                              <div class="modal fade" id="modalBorrar{{id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar el articulo N {{id}}?</h5>
+                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                      </button>
+                                    </div>
+                                    <div class="modal-body">
+                                      El articulo se borrara de la base de datos y no podra recuperarse. Pero puede volver a crearlo.
+                                    </div>
+                                    <div class="modal-footer">
+                                      <a href="/mistock/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                                <a href="/mistock/edit/{{id}}" class="btn btn-light btn-sm" id="botonEditar"><i class="fas fa-edit"></i></a>
+                                <a href="/mistock/vender/{{id}}" class="btn btn-success btn-sm" id="botonVender"><i class="fas fa-truck-loading"></i></a>
+                                <a href="/mistock/masunoefectivo/{{id}}" class="btn btn-warning btn-sm" id="botonMasUno"><i class="fas fa-cash-register"></i></a>
+                                <a href="/mistock/masunobanco/{{id}}" class="btn btn-primary btn-sm" id="botonMasUnoBanco"><i class="fas fa-credit-card"></i></a>
+                            </td>
+                            {{/ifMayor}}
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+  </div>
+  <div class="stockInfoCuatro">
+      <div class="card text-white bg-dark w-100 h-100">
+        <div class="card-header">Header</div>
+            <div class="card-body">
+                <h5 class="card-title">Acciones de la tabla</h5>
+                <p><i class="btn btn-danger btn-sm fas fa-trash-alt"></i> Para eliminar de la tabla STOCK el articulo</p>
+                <p><i class="btn btn-success btn-sm fas fa-truck-loading"></i> Para realizar ventas en cantidad del producto</p>
+                <p><i class="btn btn-warning btn-sm fas fa-cash-register"></i> Para vender un solo producto cobrando en efectivo</p>
+                <p><i class="btn btn-primary btn-sm fas fa-credit-card"></i> Para vender un solo producto cobrando con tarjeta</p>
+                <p></p>
+            </div>
+    </div>
+  </div>
+  <div class="StockInfoCinco">
+      <div class="card text-light bg-secondary w-100 h-100">
+        <div class="card-header">Mas informacion</div>
+            <div class="card-body">
+                <p class="card-text">Al agregar stock sin realizar una compra, no afectara a su estado de cuenta a menos que venda los productos que tenga en stock.</p>
+            </div>
+    </div>
+  </div>
+  <div class="stockInfoSeis">
+      <div class="card text-white bg-dark w-100 h-100">
+        <div class="card-header">Almacenamiento</div>
+            <div class="card-body">
+                <h5 class="card-title">Articulos en STOCK</h5>
+                <p class="card-text">Usted tiene actualmente {{sumaArticulos}} productos almacenados</p>
+            </div>
+    </div>
+  </div>
+</div>
+<script>
+  var $table = $('#tablaArticulos')
+
+  $(function() {
+    $table.bootstrapTable()
+  })
+</script> 

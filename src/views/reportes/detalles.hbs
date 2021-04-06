@@ -1,0 +1,49 @@
+<body>
+      <div class="container">
+      <h1 class="text-center p-4">Detalles del reporte N: {{numeroComprobante}}</h1>
+        <div class="container text-center">
+            <!-- <a href="/ventas/add" class="btn btn-success btn-lg text-dark m-2" id="botonEditar">Agregar nueva venta NO sincronizada con "Mi Stock" <i class="fas fa-plus"></i></i></a> -->
+          <div class="table-responsive" id="cont-tabla">
+            <table class="table mx-auto table-sm" id="tablaArticulos" 
+                data-show-print="true" 
+                data-show-columns="true"
+                data-show-toggle="true"
+                data-search="true"
+                data-pagination="true" 
+                data-page-size="20"
+                data-resizable="true">
+                <thead>
+                    <tr>
+                        <th data-field="numeroComprobante">N. Comprobante</th>
+                        <th data-field="tipoReporte">Reporte tipo</th>
+                        <th data-field="producto">Producto</th>
+                        <th data-field="cantidad">Cantidad</th>
+                        <th data-field="categoria">Categoria</th>
+                        <th data-field="precioCosto">P. Costo</th>
+                        <th data-field="precioVenta">P. Venta</th>
+                    </tr>
+                </thead>
+                <tbody id="mitabla">
+                    {{#each reporte}}
+                        <tr>
+                            <td>{{numeroComprobante}}</td>
+                            <td>{{tipoDeReporte}}</td>
+                            <td>{{producto}}</td>
+                            <td>{{cantidad}}</td>
+                            <td>{{categoria}}</td>
+                            <td>$ {{precioCosto}}</td>
+                            <td>$ {{precioVenta}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+      </div>
+</body>
+<script>
+  var $table = $('#tablaArticulos')
+
+  $(function() {
+    $table.bootstrapTable()
+  })
+</script>

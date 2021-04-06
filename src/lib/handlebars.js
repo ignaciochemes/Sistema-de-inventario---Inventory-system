@@ -22,4 +22,12 @@ helpers.ifMayor = function(a, b, opciones) {
     }
 };
 
+helpers.ifMetodo = function(a, b, opciones) {
+    if (a === b) {
+        return opciones.fn(this);
+    } else {
+        return opciones.inverse(this)
+    }
+};
+
 module.exports = helpers; 

@@ -21,6 +21,7 @@ router.get('/add', isLoggedIn, async (req, res) => {
 router.post('/add', isLoggedIn, async (req, res) => {
     let pedro;
     let existeArticulo = await pool.query('SELECT article_id FROM comprastock ORDER BY comprastock.article_id ASC LIMIT 1');
+    let totalArticulos = await pool.query('SELECT totalArticulos FROM cantidadarticulos WHERE user_id = ?', [req.user.id]);
     if (!existeArticulo[0]) {
         pedro = 1;
     };
@@ -53,7 +54,17 @@ router.post('/add', isLoggedIn, async (req, res) => {
         article_id: pedro,
         user_id: req.user.id
     };
-
+    const nuevoTotalArticulos = {
+        totalArticulos: cantidadIngresados,
+        user_id: req.user.id
+    };
+    if(!totalArticulos[0]) {
+        console.log('tuvi')
+        await pool.query('INSERT INTO cantidadarticulos SET ?', [nuevoTotalArticulos]);
+    } else {
+        console.log('tuhe')
+        await pool.query('UPDATE cantidadarticulos SET totalArticulos = totalArticulos + ? WHERE user_id = ?', [nuevoTotalArticulos.totalArticulos, req.user.id]);
+    }
     await pool.query('INSERT INTO comprastock set ?', [nuevoProducto]);
     await pool.query('INSERT INTO articulos set ?', [nuevoProductoEnArticulos]);
     req.flash('success', 'Compra guardada correctamente!');
@@ -71,6 +82,11 @@ router.get('/detalles/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
     const detalles = await pool.query('SELECT * FROM comprastock WHERE id = ?', [id]);
     res.render('compras/detalles', {detalles: detalles[0]});
+});
+
+router.get('/deleteall', isLoggedIn, async (req, res) => {
+    await pool.query('DELETE FROM comprastock WHERE user_id = ?', [req.user.id]);
+    res.send('TODO ELIMINADO');
 });
 
 router.get('/edit/:id', isLoggedIn, async (req, res) => {

@@ -22,6 +22,7 @@
                         <th data-field="gananciaBruta">G. Bruta</th>
                         <th data-field="gananciaNeta">G. Neta</th>
                         <th data-field="montoVenta">Monto Venta</th>
+                        <th data-field="metodo">Metodo</th>
                         <th data-field="createdAt">Cuando?</th>
                         <th>Accion</th>
                     </tr>
@@ -37,6 +38,11 @@
                             <td>$ {{gananciaBruta}}</td>
                             <td>$ {{gananciaNeta}}</td>
                             <td>$ {{montoVenta}}</td>
+                            {{#ifMetodo metodo 'Tarjeta'}}
+                            <td style="background-color: #5a5991;">{{metodo}}</td>
+                            {{else}}
+                            <td style="background-color: #b4b367;">{{metodo}}</td>
+                            {{/ifMetodo}}
                             <td>{{momentAgo created_at}}</td>
                             <td>
                               <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalBorrar{{id}}">

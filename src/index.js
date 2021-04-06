@@ -63,7 +63,7 @@ app.use('/ventas', require('./routes/ventas'));
 app.use('/categorias', require('./routes/categorias'));
 app.use('/testeos', require('./routes/testeos'));
 app.use('/articulos', require('./routes/articulos'));
-
+app.use('/reportes', require('./routes/reportes'));
 
 //Archivos publicos
 app.use(express.static(path.join(__dirname, 'public')))
