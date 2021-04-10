@@ -11,12 +11,12 @@ const { database } = require('./keys');
 
 //Inicio express y extras
 const app = express();
-//const socketio = require('socket.io');
+const socketio = require('socket.io');
 require('./lib/passport');
 
 //Socket IO
-//const server = require('http').Server(app);
-//const io = socketio(server);
+const server = require('http').Server(app);
+const io = socketio(server);
 
 //Opciones
 app.set('port', process.env.PORT || 4000);
@@ -69,6 +69,34 @@ app.use('/reportes', require('./routes/reportes'));
 app.use(express.static(path.join(__dirname, 'public')))
 
 //Arrancar el servidor
-app.listen(app.get('port'), () => {
+server.listen(app.get('port'), () => {
     console.log('Servidor prendido en el puerto', app.get('port'));
 });
+
+setInterval(estadisticas, 1000);
+function estadisticas() {
+    const os = require('os');
+    const osut = require('os-utils');
+
+    osut.cpuUsage(function(v) {
+        let segundos = os.uptime();
+        let minutos = segundos/60;
+        let horas = minutos/60;
+
+        segundos = Math.floor(segundos);
+        minutos = Math.floor(minutos);
+        horas = Math.floor(horas);
+
+        horas = horas%60;
+        minutos = minutos%60;
+        segundos = segundos%60;
+
+        let data = {
+            status: "Ok",
+            uptime: `${horas}:${minutos}:${segundos} hs`,
+            usoCpu: Math.round(v*1000)/10+"%",
+            usoRam: Math.floor((os.totalmem() - os.freemem())/os.totalmem()*1000)/10+"%"
+        }
+        io.emit("datainfo", data);
+    });
+};

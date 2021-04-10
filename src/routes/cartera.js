@@ -54,4 +54,45 @@ router.post('/addbanco', isLoggedIn, async (req, res) => {
     };
 });
 
+router.post('/deletebanco', isLoggedIn, async (req, res) => {
+    const query = await pool.query('SELECT * FROM cartera WHERE user_id = ?', [req.user.id]);
+    if (!query.length) {
+        const { dineroBanco } = req.body;
+        const nuevaCarga = {
+            dineroBanco,
+            user_id: req.user.id
+        };
+        await pool.query('INSERT INTO cartera set ?', [nuevaCarga]);
+        req.flash('success', 'Carga de dinero almacenada con exito!');
+        res.redirect('/cartera');
+    } else {
+        const { dineroBanco } = req.body;
+        const nuevaCarga = dineroBanco;
+        await pool.query('UPDATE cartera SET dineroBanco = dineroBanco + ? WHERE user_id = ?', [nuevaCarga, req.user.id]);
+        req.flash('success', 'Carga de dinero almacenada con exito!');
+        res.redirect('/cartera');
+    };
+});
+
+router.post('/deleteefectivo', isLoggedIn, async (req, res) => {
+    const query = await pool.query('SELECT * FROM cartera WHERE user_id = ?', [req.user.id]);
+    if (!query.length) {
+        const { dineroEfectivo } = req.body;
+        const nuevaCarga = {
+            dineroEfectivo,
+            user_id: req.user.id
+        };
+        //await pool.query('UPDATE cartera SET dineroEfectivo = ? WHERE user_id = ?', [nuevaCarga, req.user.id]);
+        await pool.query('INSERT INTO cartera set ?', [nuevaCarga]);
+        req.flash('success', 'Carga de dinero almacenada con exito!');
+        res.redirect('/cartera');
+    } else {
+        const { dineroEfectivo } = req.body;
+        const nuevaCarga = dineroEfectivo;
+        await pool.query('UPDATE cartera SET dineroEfectivo = dineroEfectivo + ? WHERE user_id = ?', [nuevaCarga, req.user.id]);
+        req.flash('success', 'Carga de dinero almacenada con exito!');
+        res.redirect('/cartera');
+    }
+});
+
 module.exports = router;

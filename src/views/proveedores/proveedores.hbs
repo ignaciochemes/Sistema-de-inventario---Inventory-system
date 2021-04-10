@@ -1,88 +1,88 @@
 <body>
-    <div class="container p-4 text-center">
-        {{>buscarEnTabla}}
-    </div>
       <div class="container mx-auto">
           <div id="cont-tabla">
             <h1 class="text-center">Tabla de proveedores</h1>
-            <button type="button" class="btn btn-success text-dark" data-toggle="modal" data-target="#agregarProveedor">
-              Agregar nuevo proveedor
-            </button>
-            <!-- Modal -->
-            <div class="modal fade" id="agregarProveedor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Con este formulario, usted podra crear nuevos proveedores.</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    {{>agregarProveedores}}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <table class="order-table table" id="tablaArticulos">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Empresa</th>
-                        <th>Email</th>
-                        <th>Telefono</th>
-                        <th>Telefono 2</th>
-                        <th>Descripcion</th>
-                        <th>Deuda</th>
-                        <th>Activo</th>
-                        <th>Accion</th>
-                    </tr>
-                </thead>
-                <tbody id="mitabla">
-                    {{#each proveedor}}
-                        <tr>
-                            <td>{{id}}</td>
-                            <td>{{nombre}}</td>
-                            <td>{{apellido}}</td>
-                            <td>{{empresa}}</td>
-                            <td>{{email}}</td>
-                            <td>{{telefono}}</td>
-                            <td>{{telefono2}}</td>
-                            <td>{{descripcion}}</td>
-                            <td>$ {{deuda}}</td>
-                            <td>$ {{activo}}</td>
-                            <td>
-                              <!--<a href="mistock/delete/{{id}}" class="btn btn-danger">Borrar articulo</a>></a> -->
-                              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalLong">
-                                Eliminar
-                              </button>
-                              <!-- Modal -->
-                              <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
-                                      <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar el proveedor?</h5>
-                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                      </button>
-                                    </div>
-                                    <div class="modal-body">
-                                      El proveedor se borrara de la base de datos y no podra recuperarse. Pero puede volver a crearlo.
-                                    </div>
-                                    <div class="modal-footer">
-                                      <a href="proveedores/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
+            <div class="card border-dark mb-3" style="background-color: #b9b8ae;">
+              <div class="card-header"><a href="/proveedores/add" class="btn btn-success btn-lg pull-left" id="botonAgregarProveedor">Agregar nuevo proveedor</a></div>
+              <div class="card-body text-dark">
+              <table class="table mx-auto table-sm" id="tablaArticulos" 
+                      data-show-print="false" 
+                      data-show-columns="true"
+                      data-show-toggle="true"
+                      data-search="true"
+                      data-pagination="true" 
+                      data-page-size="10"
+                      data-resizable="true">
+                  <thead>
+                      <tr>
+                          <th>Id</th>
+                          <th>Nombre</th>
+                          <th>Apellido</th>
+                          <th>Empresa</th>
+                          <th>Email</th>
+                          <th>Telefono</th>
+                          <th>Telefono 2</th>
+                          <th>Descripcion</th>
+                          <th>Deuda</th>
+                          <th>Activo</th>
+                          <th>Accion</th>
+                      </tr>
+                  </thead>
+                  <tbody id="mitabla">
+                      {{#each proveedor}}
+                          <tr>
+                              <td>{{id}}</td>
+                              <td>{{nombre}}</td>
+                              <td>{{apellido}}</td>
+                              <td>{{empresa}}</td>
+                              <td>{{email}}</td>
+                              <td>{{telefono}}</td>
+                              <td>{{telefono2}}</td>
+                              <td>{{descripcion}}</td>
+                              <td>$ {{deuda}}</td>
+                              <td>$ {{activo}}</td>
+                              <td>
+                                <!--<a href="mistock/delete/{{id}}" class="btn btn-danger">Borrar articulo</a>></a> -->
+                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalLong">
+                                  <i class="fas fa-trash-alt"></i>
+                                </button>
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar el proveedor?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        El proveedor se borrara de la base de datos y no podra recuperarse. Pero puede volver a crearlo.
+                                      </div>
+                                      <div class="modal-footer">
+                                        <a href="proveedores/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                                <a href="proveedores/edit/{{id}}" class="btn btn-dark btn-sm" id="botonEditar">EDITAR</a>
-                            </td>
-                        </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-    </div>
+                                  <a href="proveedores/edit/{{id}}" class="btn btn-light btn-sm" id="botonEditar"><i class="fas fa-edit"></i></a>
+                              </td>
+                          </tr>
+                      {{/each}}
+                  </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
 </body>
+<script src="/js/traduccionEs.js"></script>
+<script>
+  var $table = $('#tablaArticulos')
+
+  $(function() {
+    $table.bootstrapTable({
+      locate: 'es'
+    })
+  })
+</script> 

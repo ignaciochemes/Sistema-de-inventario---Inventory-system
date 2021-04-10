@@ -4,6 +4,7 @@
         <div class="container text-center">
             <!-- <a href="/ventas/add" class="btn btn-success btn-lg text-dark m-2" id="botonEditar">Agregar nueva venta NO sincronizada con "Mi Stock" <i class="fas fa-plus"></i></i></a> -->
           <div class="table-responsive" id="cont-tabla">
+          {{#ifMetodo match.tipoDeReporte 'Inventario'}}
             <table class="table mx-auto table-sm" id="tablaArticulos" 
                 data-show-print="true" 
                 data-show-columns="true"
@@ -24,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody id="mitabla">
-                    {{#each reporte}}
+                    {{#each reporteMercaderia}}
                         <tr>
                             <td>{{numeroComprobante}}</td>
                             <td>{{tipoDeReporte}}</td>
@@ -35,6 +36,48 @@
                             <td>$ {{precioVenta}}</td>
                         </tr>
                     {{/each}}
+                  {{/ifMetodo}}
+                </tbody>
+            </table>
+            {{#ifMetodo match.tipoDeReporte 'Caja'}}
+            <table class="table mx-auto table-sm" id="tablaArticulos" 
+                data-show-print="true" 
+                data-show-columns="true"
+                data-show-toggle="true"
+                data-search="true"
+                data-pagination="true" 
+                data-page-size="20"
+                data-resizable="true">
+                <thead>
+                    <tr>
+                        <th data-field="numeroComprobante">N. Comprobante</th>
+                        <th data-field="tipoReporte">Reporte tipo</th>
+                        <th data-field="producto">Producto</th>
+                        <th data-field="descripcion">Descripcion</th>
+                        <th data-field="cantidadVendidos">C. Vendidos</th>
+                        <th data-field="gananciaBruta">G. Bruta</th>
+                        <th data-field="gananciaNeta">G. Neta</th>
+                        <th data-field="montoVenta">M. Venta</th>
+                        <th data-field="montoVentaNeto">M. Venta Neto</th>
+                        <th data-field="metodo">Metodo</th>
+                    </tr>
+                </thead>
+                <tbody id="mitabla">
+                    {{#each reporteCaja}}
+                        <tr>
+                            <td>{{numeroComprobante}}</td>
+                            <td>Caja</td>
+                            <td>{{producto}}</td>
+                            <td>{{descripcion}}</td>
+                            <td>{{cantidadVendidos}}</td>
+                            <td>$ {{gananciaBruta}}</td>
+                            <td>$ {{gananciaNeta}}</td>
+                            <td>$ {{montoVenta}}</td>
+                            <td>$ {{montoVentaNeto}}</td>
+                            <td>{{metodo}}</td>
+                        </tr>
+                    {{/each}}
+                  {{/ifMetodo}}
                 </tbody>
             </table>
         </div>

@@ -179,7 +179,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 0.5fr 1.5fr 1fr;
-  gap: 10px 10px;
+  gap: 5px 5px;
   grid-template-areas:
     ". welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome welcome ."
     ". graficoUno graficoUno graficoUno graficoUno graficoUno graficoUno graficoDos graficoDos graficoDos graficoDos graficoDos graficoDos ."
@@ -267,6 +267,28 @@ body {
 .StockInfoCinco { grid-area: StockInfoCinco; }
 
 .stockInfoSeis { grid-area: stockInfoSeis; }
+
+.grid-container4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0.5fr 1.5fr 1fr 1fr;
+  gap: 3px 4px;
+  grid-template-areas:
+    ". stockInfoUnoCompras stockInfoUnoCompras stockInfoUnoCompras sotckInfoDosCompras sotckInfoDosCompras ."
+    ". stockInfoUnoCompras stockInfoUnoCompras stockInfoUnoCompras sotckInfoDosCompras sotckInfoDosCompras ."
+    ". stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras ."
+    ". stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras ."
+    ". stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras ."
+    ". stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras ."
+    ". stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras ."
+    ". stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras stockInfoTresCompras .";
+}
+
+.stockInfoUnoCompras { grid-area: stockInfoUnoCompras; }
+
+.sotckInfoDosCompras { grid-area: sotckInfoDosCompras; }
+
+.stockInfoTresCompras { grid-area: stockInfoTresCompras; }
 
 .bd-callout {
   padding: 1.25rem;

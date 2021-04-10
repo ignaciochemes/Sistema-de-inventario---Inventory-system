@@ -1,0 +1,82 @@
+<div class="container p-4">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/articulos/add" method="POST">
+                        <div class="form-group">
+                            Producto:
+                            <input type="text" class="form-control" name="producto" placeholder="Nombre del producto" autofocus>
+                        </div>
+                        <div class="form-group">
+                            Descripcion:
+                            <textarea id="" rows="2" class="form-control" name="descripcion"></textarea>
+                        </div>
+                        {{#if categorias}}
+                        <div class="form-row">
+                            <div class="col-auto my-1">
+                                <p>Categorias: </p>
+                                <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Categorias</label>
+                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="categoria">
+                                    <option selected>Categorias</option>
+                                    {{#each categorias}}
+                                    <option>{{this.titulo}}</option> 
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        {{else}}
+                        <div class="form-group">
+                            No tienes categorias, puedes crear una AQUI!
+                            <input type="text" name="categoria" class="form-control" placeholder="Categoria">
+                        </div>
+                        {{/if}}
+                        <div class="form-group">
+                            Precio Costo:
+                            <input type="number" name="precioCosto" class="form-control" placeholder="Precio Costo c/u">
+                        </div>
+                        <div class="form-group">
+                            Precio Venta:
+                            <input type="number" name="precioVenta" class="form-control" placeholder="Precio Venta c/u">
+                        </div>
+                        <div class="form-group">
+                            Cantidad/Stock Comprados
+                            <input type="number" name="cantidadIngresados" class="form-control" placeholder="Cantidad/Stock comprados">
+                        </div>
+                        <div class="form-group">
+                            Gastos Envios:
+                            <input type="number" name="gastosEnvio" class="form-control" placeholder="Gastos Envio">
+                        </div>
+                        <div class="form-group">
+                            Gastos Varios:
+                            <input type="number" name="gastosVarios" class="form-control" placeholder="Gastos Varios">
+                        </div>
+                        {{#if proveedores}}
+                        <div class="form-row">
+                            <div class="col-auto my-1">
+                                <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Proveedores</label>
+                                <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="proveedor">
+                                    <option selected>Proveedores</option>
+                                    {{#each proveedores}}
+                                    <option>{{this.empresa}}</option>
+                                    {{/each}}
+                                </select>
+                            </div>
+                        </div>
+                        {{else}}
+                        <div class="form-group">
+                            No tienes proveedores, puede crear uno AQUI!
+                            <input type="text" name="proveedor" class="form-control" placeholder="Proveedor">
+                        </div>
+                        {{/if}}
+                        <div class="form-group">
+                            <button class="btn btn-success">
+                                Agregar nuevo articulo
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

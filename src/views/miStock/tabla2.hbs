@@ -1,5 +1,5 @@
 <div class="grid-container3">
-  <div class="stockInfoUno">
+  <div class="stockInfoUno" style="padding-top: 20px;">
       <div class="card text-white bg-dark w-100 h-100">
         <div class="card-header">Tabla de Stock</div>
             <div class="card-body">
@@ -8,7 +8,7 @@
             </div>
     </div>
   </div>
-  <div class="sotckInfoDos">
+  <div class="sotckInfoDos" style="padding-top: 20px;">
       <div class="card text-dark bg-light w-100 h-100">
         <div class="card-header">Cartera</div>
             <div class="card-body">
@@ -18,7 +18,10 @@
             </div>
     </div>
   </div>
-  <div class="stockInfoTres">
+  <div class="stockInfoTres" style="margin-top: 10px;">
+    <div class="card border-dark mb-3" style="background-color: #b9b8ae;">
+    <div class="card-header"><a href="/mistock/add" class="btn btn-success btn-sm pull-right" id="botonAgregarStock">Agregar productos a stock sin realizar una compra</a></div>
+      <div class="card-body text-dark">
       <div class="table-responsive" id="cont-tabla">
             <table class="table mx-auto table-sm" id="tablaArticulos" 
                 data-show-print="false" 
@@ -27,7 +30,7 @@
                 data-search="true"
                 data-pagination="true" 
                 data-page-size="10"
-                data-resizable="true">
+                data-resizable="true"> 
                 <thead>
                     <tr>
                         <th data-field="id">Id</th>
@@ -133,13 +136,15 @@
                 </tbody>
             </table>
         </div>
+      </div>
+  </div>
   </div>
   <div class="stockInfoCuatro">
-      <div class="card text-white bg-dark w-100 h-100">
-        <div class="card-header">Header</div>
+      <div class="card text-white bg-dark w-100">
+        <div class="card-header"><h3>Acciones de la tabla</h3></div>
             <div class="card-body">
-                <h5 class="card-title">Acciones de la tabla</h5>
                 <p><i class="btn btn-danger btn-sm fas fa-trash-alt"></i> Para eliminar de la tabla STOCK el articulo</p>
+                <p><i class="btn btn-light btn-sm fas fa-edit"></i> Para editar el articulo en stock</p>
                 <p><i class="btn btn-success btn-sm fas fa-truck-loading"></i> Para realizar ventas en cantidad del producto</p>
                 <p><i class="btn btn-warning btn-sm fas fa-cash-register"></i> Para vender un solo producto cobrando en efectivo</p>
                 <p><i class="btn btn-primary btn-sm fas fa-credit-card"></i> Para vender un solo producto cobrando con tarjeta</p>
@@ -165,10 +170,16 @@
     </div>
   </div>
 </div>
+<script src="/js/traduccionEs.js"></script>
 <script>
-  var $table = $('#tablaArticulos')
+var $table = $('#tablaArticulos')
 
-  $(function() {
-    $table.bootstrapTable()
-  })
+$(function() {
+  $table.bootstrapTable({
+    locate: 'es'
+  });
+})
+$('#popover-dismiss').popover({
+  trigger: 'hover'
+})
 </script> 

@@ -5,8 +5,7 @@ const pool = require('../database');
 const { isLoggedIn } = require('../lib/auth');
 
 
-router.get('/add/:id', isLoggedIn, async (req, res) => {
-    const { id } = req.params;
+router.get('/add', isLoggedIn, async (req, res) => {
     const categorias = await pool.query('SELECT * FROM categorias WHERE user_id = ?', [req.user.id]);
     const articulosCreados = await pool.query('SELECT * FROM articulos WHERE user_id = ?', [req.user.id]);
     res.render('miStock/add', {categorias: categorias, articulosCreados: articulosCreados});

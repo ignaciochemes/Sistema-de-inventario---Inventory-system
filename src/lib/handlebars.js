@@ -14,7 +14,20 @@ helpers.momentAgo = (timestamp) => {
     return moment(timestamp).format("dddd, MMMM Do YYYY, h:mm:ss a");
 };
 
+helpers.momentAgoHaceTanto = (timestamp) => {
+    moment.locale('es');
+    return moment(timestamp).startOf('day').fromNow(); 
+};
+
 helpers.ifMayor = function(a, b, opciones) {
+    if (a <= b) {
+        return opciones.fn(this);
+    } else {
+        return opciones.inverse(this)
+    }
+};
+
+helpers.ifMenor = function(a, b, opciones) {
     if (a <= b) {
         return opciones.fn(this);
     } else {

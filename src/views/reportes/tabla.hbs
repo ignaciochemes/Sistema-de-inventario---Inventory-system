@@ -42,6 +42,12 @@
                             <td style="background-color: #ff7676;">{{momentAgo created_at}}</td>
                             <td class="text-center" style="background-color: #ff7676;"><a href="/reportes/detalles/{{numeroComprobante}}" class="btn btn-light btn-sm" id="verDetalles"><i class="fas fa-info-circle"></i></a></td>
                             {{/ifMetodo}}
+                            {{#ifMetodo tipoDeReporte 'Caja'}}
+                            <td style="background-color: #c9b64b;">{{numeroComprobante}}</td>
+                            <td style="background-color: #c9b64b;">{{tipoDeReporte}}</td>
+                            <td style="background-color: #c9b64b;">{{momentAgo created_at}}</td>
+                            <td class="text-center" style="background-color: #c9b64b;"><a href="/reportes/detalles/{{numeroComprobante}}" class="btn btn-light btn-sm" id="verDetalles"><i class="fas fa-info-circle"></i></a></td>
+                            {{/ifMetodo}}
                         </tr>
                     {{/each}}    
                 </tbody>
@@ -79,10 +85,13 @@
     </div>
   </div>
 </div>
+<script src="/js/traduccionEs.js"></script>
 <script>
   var $table = $('#tablaArticulos')
 
   $(function() {
-    $table.bootstrapTable()
-  })
+    $table.bootstrapTable({
+      locate: 'es'
+    });
+  });
 </script> 

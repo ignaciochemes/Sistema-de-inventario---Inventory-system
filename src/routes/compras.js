@@ -14,19 +14,21 @@ router.get('/', isLoggedIn, async (req, res) => {
 
 router.get('/add', isLoggedIn, async (req, res) => {
     const proveedores = await pool.query('SELECT * FROM proveedores WHERE user_id = ?', [req.user.id]);
-    //const categorias = await pool.query('SELECT titulo FROM categorias WHERE user_id = ?', [req.user.id]);
-    res.render('compras/add', {proveedores: proveedores});
+    const categorias = await pool.query('SELECT titulo FROM categorias WHERE user_id = ?', [req.user.id]);
+    res.render('compras/add', {proveedores: proveedores, categorias: categorias});
 });
 
 router.post('/add', isLoggedIn, async (req, res) => {
+    let user = req.user.id;
     let pedro;
-    let existeArticulo = await pool.query('SELECT article_id FROM comprastock ORDER BY comprastock.article_id ASC LIMIT 1');
-    let totalArticulos = await pool.query('SELECT totalArticulos FROM cantidadarticulos WHERE user_id = ?', [req.user.id]);
+
+    let existeArticulo = await pool.query('SELECT article_id FROM comprastock ORDER BY comprastock.article_id DESC LIMIT 1');
+    let totalArticulos = await pool.query('SELECT totalArticulos FROM cantidadarticulos WHERE user_id = ?', [user]);
+    //Pedro
     if (!existeArticulo[0]) {
         pedro = 1;
     };
     if (existeArticulo[0]) {
-        console.log('si')
         pedro = existeArticulo[0].article_id + 1;
     };
     const { producto, descripcion, categoria, precioCosto, precioVenta, cantidadIngresados, gastosEnvio, gastosVarios, proveedor } = req.body;
@@ -41,7 +43,7 @@ router.post('/add', isLoggedIn, async (req, res) => {
         gastosVarios,
         proveedor,
         article_id: pedro,
-        user_id: req.user.id
+        user_id: user
     };
     const nuevoProductoEnArticulos = {
         producto,
@@ -52,19 +54,19 @@ router.post('/add', isLoggedIn, async (req, res) => {
         cantidadIngresados,
         proveedor,
         article_id: pedro,
-        user_id: req.user.id
+        user_id: user
     };
     const nuevoTotalArticulos = {
         totalArticulos: cantidadIngresados,
-        user_id: req.user.id
+        user_id: user
     };
+    //
     if(!totalArticulos[0]) {
-        console.log('tuvi')
         await pool.query('INSERT INTO cantidadarticulos SET ?', [nuevoTotalArticulos]);
     } else {
-        console.log('tuhe')
-        await pool.query('UPDATE cantidadarticulos SET totalArticulos = totalArticulos + ? WHERE user_id = ?', [nuevoTotalArticulos.totalArticulos, req.user.id]);
+        await pool.query('UPDATE cantidadarticulos SET totalArticulos = totalArticulos + ? WHERE user_id = ?', [nuevoTotalArticulos.totalArticulos, user]);
     }
+    
     await pool.query('INSERT INTO comprastock set ?', [nuevoProducto]);
     await pool.query('INSERT INTO articulos set ?', [nuevoProductoEnArticulos]);
     req.flash('success', 'Compra guardada correctamente!');
