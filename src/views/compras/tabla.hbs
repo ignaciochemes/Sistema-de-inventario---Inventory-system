@@ -22,7 +22,6 @@
   <div class="stockInfoTresCompras" style="margin-top: 10px;">
     <div class="card border-dark mb-3" style="background-color: #b9b8ae;">
       <div class="card-body text-dark">
-        <a href="/compras/add" class="btn btn-success btn-lg pull-left" id="botonAgregarStock">Agregar nueva compra</a>
           <div class="table-responsive" id="cont-tabla">
             <table class="table mx-auto table-sm" id="tablaArticulos" 
                 data-show-print="false" 
@@ -43,7 +42,8 @@
                         <th data-field="cantidadIngresados">Ingresados</th>
                         <th data-field="gastosEnvio">Gastos Envio</th>
                         <th data-field="gastosVarios">Gastos Varios</th>
-                        <th data-field="cantidadVendidos">Proveedor</th>
+                        <th data-field="proveedor">Proveedor</th>
+                        <th data-field="fecha">Fecha</th>
                         <th>Accion</th>
                     </tr>
                 </thead>
@@ -60,6 +60,7 @@
                         <td>$ {{gastosEnvio}}</td>
                         <td>$ {{gastosVarios}}</td>
                         <td>{{proveedor}}</td>
+                        <td>{{momentAgo created_at}}</td>
                         <td>
                           <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalBorrar{{id}}">
                             <i class="fas fa-trash-alt"></i>
@@ -69,13 +70,13 @@
                             <div class="modal-dialog" role="document">
                               <div class="modal-content">
                                 <div class="modal-header">
-                                  <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar el articulo N {{id}}?</h5>
+                                  <h5 class="modal-title" id="exampleModalLongTitle">Seguro quiere eliminar la compra N {{id}}?</h5>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
                                 <div class="modal-body">
-                                  El articulo se borrara de la base de datos y no podra recuperarse. Pero puede volver a crearlo.
+                                  El registro de compra se borrara de la base de datos y no podra recuperarse.
                                 </div>
                                 <div class="modal-footer">
                                   <a href="/compras/delete/{{id}}" class="btn btn-danger btn-sm" id="botonEliminar">Eliminar</a>
@@ -98,8 +99,7 @@
     <div class="col-md-4 mx-auto p-5">
         <h1 class="text-center">Tabla Compras</h1>
         <div class="card card-body text-center">
-            <p>No tiene agregada ninguna compra</p>
-            <a class="btn btn-success" href="/compras/add">Agregar nueva compra</a>
+            <p>No tiene registrada ninguna compra</p>
         </div>
     </div>
 {{/if}}

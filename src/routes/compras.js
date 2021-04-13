@@ -6,72 +6,75 @@ const { isLoggedIn } = require('../lib/auth');
 
 
 router.get('/', isLoggedIn, async (req, res) => {
-    const compra = await pool.query('SELECT * FROM comprastock WHERE user_id = ?', [req.user.id]);
-    const proveedor = await pool.query('SELECT * FROM proveedores WHERE user_id = ?', [req.user.id]);
-    const categorias = await pool.query('SELECT titulo FROM categorias WHERE user_id = ?', [req.user.id]);
+    let user = req.user.id;
+    const compra = await pool.query('SELECT * FROM comprastock WHERE user_id = ? ORDER BY id DESC', [user]);
+    const proveedor = await pool.query('SELECT * FROM proveedores WHERE user_id = ?', [user]);
+    const categorias = await pool.query('SELECT titulo FROM categorias WHERE user_id = ?', [user]);
     res.render('compras/tabla', {compras: compra, proveedores: proveedor, categorias: categorias});
 });
 
-router.get('/add', isLoggedIn, async (req, res) => {
-    const proveedores = await pool.query('SELECT * FROM proveedores WHERE user_id = ?', [req.user.id]);
-    const categorias = await pool.query('SELECT titulo FROM categorias WHERE user_id = ?', [req.user.id]);
-    res.render('compras/add', {proveedores: proveedores, categorias: categorias});
-});
+//Se comenta porque no se podra agregar de forma manual una compra de productos
 
-router.post('/add', isLoggedIn, async (req, res) => {
-    let user = req.user.id;
-    let pedro;
+// router.get('/add', isLoggedIn, async (req, res) => {
+//     const proveedores = await pool.query('SELECT * FROM proveedores WHERE user_id = ?', [req.user.id]);
+//     const categorias = await pool.query('SELECT titulo FROM categorias WHERE user_id = ?', [req.user.id]);
+//     res.render('compras/add', {proveedores: proveedores, categorias: categorias});
+// });
 
-    let existeArticulo = await pool.query('SELECT article_id FROM comprastock ORDER BY comprastock.article_id DESC LIMIT 1');
-    let totalArticulos = await pool.query('SELECT totalArticulos FROM cantidadarticulos WHERE user_id = ?', [user]);
-    //Pedro
-    if (!existeArticulo[0]) {
-        pedro = 1;
-    };
-    if (existeArticulo[0]) {
-        pedro = existeArticulo[0].article_id + 1;
-    };
-    const { producto, descripcion, categoria, precioCosto, precioVenta, cantidadIngresados, gastosEnvio, gastosVarios, proveedor } = req.body;
-    const nuevoProducto = {
-        producto,
-        descripcion,
-        categoria,
-        precioCosto,
-        precioVenta,
-        cantidadIngresados,
-        gastosEnvio,
-        gastosVarios,
-        proveedor,
-        article_id: pedro,
-        user_id: user
-    };
-    const nuevoProductoEnArticulos = {
-        producto,
-        descripcion,
-        categoria,
-        precioCosto,
-        precioVenta,
-        cantidadIngresados,
-        proveedor,
-        article_id: pedro,
-        user_id: user
-    };
-    const nuevoTotalArticulos = {
-        totalArticulos: cantidadIngresados,
-        user_id: user
-    };
-    //
-    if(!totalArticulos[0]) {
-        await pool.query('INSERT INTO cantidadarticulos SET ?', [nuevoTotalArticulos]);
-    } else {
-        await pool.query('UPDATE cantidadarticulos SET totalArticulos = totalArticulos + ? WHERE user_id = ?', [nuevoTotalArticulos.totalArticulos, user]);
-    }
+// router.post('/add', isLoggedIn, async (req, res) => {
+//     let user = req.user.id;
+//     let pedro;
+
+//     let existeArticulo = await pool.query('SELECT article_id FROM comprastock ORDER BY comprastock.article_id DESC LIMIT 1');
+//     let totalArticulos = await pool.query('SELECT totalArticulos FROM cantidadarticulos WHERE user_id = ?', [user]);
+//     //Pedro
+//     if (!existeArticulo[0]) {
+//         pedro = 1;
+//     };
+//     if (existeArticulo[0]) {
+//         pedro = existeArticulo[0].article_id + 1;
+//     };
+//     const { producto, descripcion, categoria, precioCosto, precioVenta, cantidadIngresados, gastosEnvio, gastosVarios, proveedor } = req.body;
+//     const nuevoProducto = {
+//         producto,
+//         descripcion,
+//         categoria,
+//         precioCosto,
+//         precioVenta,
+//         cantidadIngresados,
+//         gastosEnvio,
+//         gastosVarios,
+//         proveedor,
+//         article_id: pedro,
+//         user_id: user
+//     };
+//     const nuevoProductoEnArticulos = {
+//         producto,
+//         descripcion,
+//         categoria,
+//         precioCosto,
+//         precioVenta,
+//         cantidadIngresados,
+//         proveedor,
+//         article_id: pedro,
+//         user_id: user
+//     };
+//     const nuevoTotalArticulos = {
+//         totalArticulos: cantidadIngresados,
+//         user_id: user
+//     };
+//     //
+//     if(!totalArticulos[0]) {
+//         await pool.query('INSERT INTO cantidadarticulos SET ?', [nuevoTotalArticulos]);
+//     } else {
+//         await pool.query('UPDATE cantidadarticulos SET totalArticulos = totalArticulos + ? WHERE user_id = ?', [nuevoTotalArticulos.totalArticulos, user]);
+//     }
     
-    await pool.query('INSERT INTO comprastock set ?', [nuevoProducto]);
-    await pool.query('INSERT INTO articulos set ?', [nuevoProductoEnArticulos]);
-    req.flash('success', 'Compra guardada correctamente!');
-    res.redirect('/compras');
-});
+//     await pool.query('INSERT INTO comprastock set ?', [nuevoProducto]);
+//     await pool.query('INSERT INTO articulos set ?', [nuevoProductoEnArticulos]);
+//     req.flash('success', 'Compra guardada correctamente!');
+//     res.redirect('/compras');
+// });
 
 router.get('/delete/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;

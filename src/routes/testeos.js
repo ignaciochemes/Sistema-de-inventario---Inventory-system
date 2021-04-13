@@ -6,7 +6,7 @@ const { isLoggedIn } = require('../lib/auth');
 
 
 router.get('/', isLoggedIn, (req, res) => {
-    res.render('testeos/tablaPagination');
+    res.render('testeos/activeReports');
 });
 
 module.exports = router;
