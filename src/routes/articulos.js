@@ -197,6 +197,58 @@ router.post('/addnuevoingreso/:id', isLoggedIn, async (req, res) => {
     res.redirect('/articulos');
 });
 
+router.get('/addsincomprar', isLoggedIn, async (req, res) => {
+    const proveedores = await pool.query('SELECT empresa FROM proveedores WHERE user_id = ?', [req.user.id]);
+    res.render('articulos/addsincomprar', {proveedores: proveedores});
+});
+
+router.post('/addsincomprar', isLoggedIn, async (req, res) => {
+    let user = req.user.id;
+    let article_id_numero = 0;
+    const { producto, descripcion, categoria, cantidadIngresados, precioVenta, precioCosto, proveedor } = req.body;
+    //const seleccionDeProductosXUsuario = await pool.query('SELECT producto FROM articulos WHERE user_id = ?', [user]);
+    
+    const articleId = await pool.query('SELECT article_id FROM articulos ORDER BY id DESC LIMIT 1');
+    if (!articleId[0]) {
+        console.log('no')
+        article_id_numero = 1;
+    }
+    if(articleId[0]) {
+        console.log('si')
+        article_id_numero = articleId[0].article_id + 1;
+    };
+
+    // if (seleccionDeProductosXUsuario[0]) {
+    //     const updateProducto = {
+    //         producto: producto,
+    //         descripcion: descripcion,
+    //         categoria: categoria,
+    //         cantidadIngresados: cantidadIngresados,
+    //         precioVenta: precioVenta,
+    //         precioCosto: precioCosto,
+    //         proveedor: proveedor,
+    //         user_id: user,
+    //     };
+    //     await pool.query('UPDATE stock SET ? WHERE article_id = ? AND user_id = ?', [updateProducto, seleccionDeProductosXUsuario[0].article_id, user]);
+    //     req.flash('success', 'Producto guardado correctamente!');
+    //     res.redirect('/articulos');
+    //Insertamos el nuevo articulo en la base de datos
+    const nuevoProducto = {
+        producto: producto,
+        descripcion: descripcion,
+        categoria: categoria,
+        cantidadIngresados: cantidadIngresados,
+        precioVenta: precioVenta,
+        precioCosto: precioCosto,
+        proveedor: proveedor,
+        user_id: user,
+        article_id: article_id_numero
+    };
+    await pool.query('INSERT INTO articulos SET ?', [nuevoProducto]);
+    req.flash('success', `Articulo agregado satisfactoriamente con un ingreso de ${cantidadIngresados}`);
+    res.redirect('/articulos');
+});
+
 router.get('/delete/:id', isLoggedIn, async (req, res) => {
     const { id } = req.params;
     await pool.query('DELETE FROM articulos WHERE id = ?', [id]);

@@ -6,13 +6,13 @@ const pool = require('../database');
 const { isLoggedIn, isNotLoggedIn } = require('../lib/auth');
 
 //Rutas de registro
-router.get('/signup', isNotLoggedIn, (req, res) => {
+router.get('/signup/registrar/cuenta', isNotLoggedIn, (req, res) => {
     res.render('auth/signup')
 });
 
-router.post('/signup', isNotLoggedIn, passport.authenticate('local.signup', {
+router.post('/signup/registrar/cuenta', isNotLoggedIn, passport.authenticate('local.signup', {
     successRedirect: '/profile',
-    failureRedirect: '/signup',
+    failureRedirect: '/signup/registrar/cuenta',
     failureFlash: true
 }));
 
